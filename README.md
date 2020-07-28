@@ -24,3 +24,5 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 ## Images
 
 <p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/code1.png" width="800"></p>
+<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/code1.png" width="800"></p>
+<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/code1.png" width="800"></p>
