@@ -159,6 +159,31 @@
 							</a>
 						</li>
 						<!-- /main -->
+
+						<!-- RH -->
+						@role(['chamados', 'auxiliar-tecnologia', 'usuarios-sa'])
+						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Recursos Humanos</div> <i class="icon-menu" title="Forms"></i></li>
+						@endrole
+						@role('auxiliar-tecnologia')
+						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-cog"></i> <span>Auxiliares</span></a>
+							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+								<li class="nav-item"><a href="{{ route('funcoes.index') }}" class="nav-link">Funções</a></li>
+								<li class="nav-item"><a href="{{ route('setores.index') }}" class="nav-link">Setores</a></li>
+							</ul>
+						</li>
+						@endrole
+						@role('pessoas')
+						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-users"></i> <span>Pessoas</span></a>
+							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+								<li class="nav-item"><a href="{{ route('pessoas.create') }}" class="nav-link">Cadastrar</a></li>
+								<li class="nav-item"><a href="{{ route('pessoas.index') }}" class="nav-link">Listar</a></li>
+							</ul>
+						</li>
+						@endrole
+						<!-- /rh -->
+
 						<!-- Tecnologia -->
 						@role(['chamados', 'auxiliar-tecnologia', 'usuarios-sa'])
 						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Tecnologia</div> <i class="icon-menu" title="Forms"></i></li>
@@ -169,8 +194,6 @@
 							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
 								<li class="nav-item"><a href="{{ route('categorias.index') }}" class="nav-link">Categorias</a></li>
 								<li class="nav-item"><a href="{{ route('marcas.index') }}" class="nav-link">Marcas</a></li>
-								<li class="nav-item"><a href="{{ route('funcoes.index') }}" class="nav-link">Funções</a></li>
-								<li class="nav-item"><a href="{{ route('setores.index') }}" class="nav-link">Setores</a></li>
 								<li class="nav-item"><a href="{{ route('tecnicos.index') }}" class="nav-link">Técnicos</a></li>
 								<li class="nav-item"><a href="{{ route('tiposcontratos.index') }}" class="nav-link">Tipos de Contratos</a></li>
 								<li class="nav-item"><a href="{{ route('tiposequipamentos.index') }}" class="nav-link">Tipos de Equipamentos</a></li>
@@ -209,7 +232,7 @@
 						</li>
 						@endrole
 						<!-- /usuarios -->
-						
+
 						<hR>
 						<li class="nav-item">
 							<a href="#" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
