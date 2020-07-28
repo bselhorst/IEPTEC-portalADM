@@ -21,8 +21,16 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Images
+## View Images
+
+<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/view1.png" width="800"></p>
+<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/view2.png" width="800"></p>
+<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/view3.png" width="800"></p>
+<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/view4.png" width="800"></p>
+<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/laratrust.png" width="800"></p>
+
+## Code Images
 
 <p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/code1.png" width="800"></p>
-<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/code1.png" width="800"></p>
-<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/code1.png" width="800"></p>
+<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/code2.png" width="800"></p>
+<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/code3.png" width="800"></p>
