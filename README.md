@@ -27,8 +27,9 @@ Project created using:
 - Laravel 7.22.4 
 - PHP 7.4.4 
 - MariaDB
-- For rules and permissions laratrust was used
+- Laratrust (For roles and permissions)
 
+This system was created to IEPTEC, however, it will grow even more according to the administration
 ## View Images
 
 <p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/view1.png" width="800"></p>
