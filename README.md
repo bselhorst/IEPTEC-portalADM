@@ -21,6 +21,14 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
+## About Project
+
+Project created using: 
+- Laravel 7.22.4 
+- PHP 7.4.4 
+- MariaDB
+- For rules and permissions laratrust was used
+
 ## View Images
 
 <p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/view1.png" width="800"></p>
