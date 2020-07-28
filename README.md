@@ -23,6 +23,8 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 ## About Project
 
+This is an internal administrative portal for IEPTEC, so far it only has the technology, users and human resources modules. 
+
 Project created using: 
 - Laravel 7.22.4 
 - PHP 7.4.4 
