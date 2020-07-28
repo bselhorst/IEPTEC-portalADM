@@ -49,7 +49,7 @@ Route::group(['prefix' => 'usuariosSA', 'middleware' => ['role:usuarios-sa']], f
 });
 
 //PESSOAS
-Route::group(['prefix' => 'pessoas', 'middleware' => ['role:pessoas:usuarios']], function() {
+Route::group(['prefix' => 'pessoas', 'middleware' => ['role:pessoas']], function() {
     Route::post('/', ['uses' => 'PessoasController@store', 'as' => 'pessoas.store'])->middleware('permission:create-pessoas');
     Route::get('/', ['uses' => 'PessoasController@index', 'as' => 'pessoas.index']);
     Route::get('/create', ['uses' => 'PessoasController@create', 'as' => 'pessoas.create'])->middleware('permission:create-pessoas');

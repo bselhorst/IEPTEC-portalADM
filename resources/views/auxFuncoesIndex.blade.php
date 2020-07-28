@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Funcoes</span>
+<span class="font-weight-semibold">Funções</span>
 @endsection
 
 @section('page-title-buttons')
@@ -10,7 +10,7 @@
 
 @section('breadcrumb')
 <a href="tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="{{ route('funcoes.index') }}" class="breadcrumb-item active"><i class="icon-books mr-2"></i> Funcoes</a>
+<a href="{{ route('funcoes.index') }}" class="breadcrumb-item active"><i class="icon-books mr-2"></i> Funções</a>
 @endsection
 
 @section('content')

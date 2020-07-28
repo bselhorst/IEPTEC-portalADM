@@ -160,8 +160,24 @@
 						</li>
 						<!-- /main -->
 						<!-- Tecnologia -->
-						@role('chamados')
+						@role(['chamados', 'auxiliar-tecnologia', 'usuarios-sa'])
 						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Tecnologia</div> <i class="icon-menu" title="Forms"></i></li>
+						@endrole
+						@role('auxiliar-tecnologia')
+						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-cog"></i> <span>Auxiliares</span></a>
+							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+								<li class="nav-item"><a href="{{ route('categorias.index') }}" class="nav-link">Categorias</a></li>
+								<li class="nav-item"><a href="{{ route('marcas.index') }}" class="nav-link">Marcas</a></li>
+								<li class="nav-item"><a href="{{ route('funcoes.index') }}" class="nav-link">Funções</a></li>
+								<li class="nav-item"><a href="{{ route('setores.index') }}" class="nav-link">Setores</a></li>
+								<li class="nav-item"><a href="{{ route('tecnicos.index') }}" class="nav-link">Técnicos</a></li>
+								<li class="nav-item"><a href="{{ route('tiposcontratos.index') }}" class="nav-link">Tipos de Contratos</a></li>
+								<li class="nav-item"><a href="{{ route('tiposequipamentos.index') }}" class="nav-link">Tipos de Equipamentos</a></li>
+							</ul>
+						</li>
+						@endrole
+						@role('chamados')
 						<li class="nav-item nav-item-submenu">
 							<a href="#" class="nav-link"><i class="icon-ticket"></i> <span>Chamados</span></a>
 							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
@@ -180,71 +196,6 @@
 						</li>
 						@endrole
 						<!-- /tecnologia -->
-						<!-- Tecnologia -->
-						@role('auxiliar-tecnologia')
-						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Auxiliares</div> <i class="icon-menu" title="Forms"></i></li>
-						@permission('create-aux-tecnologia')
-						<li class="nav-item nav-item-submenu">
-							<li class="nav-item">
-								<a href="{{ route('categorias.index') }}" class="nav-link">
-									<i class="icon-books"></i>
-									<span>
-										Categorias
-									</span>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ route('marcas.index') }}" class="nav-link">
-									<i class="icon-books"></i>
-									<span>
-										Marcas
-									</span>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ route('funcoes.index') }}" class="nav-link">
-									<i class="icon-books"></i>
-									<span>
-										Funções
-									</span>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ route('setores.index') }}" class="nav-link">
-									<i class="icon-office"></i>
-									<span>
-										Setores
-									</span>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ route('tecnicos.index') }}" class="nav-link">
-									<i class="icon-users"></i>
-									<span>
-										Técnicos
-									</span>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ route('tiposcontratos.index') }}" class="nav-link">
-									<i class="icon-books"></i>
-									<span>
-										Tipos de Contratos
-									</span>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ route('tiposequipamentos.index') }}" class="nav-link">
-									<i class="icon-books"></i>
-									<span>
-										Tipos de Equipamentos
-									</span>
-								</a>
-							</li>
-						</li>
-						@endpermission
-						@endrole
-						<!-- /tecnologia -->
 
 						<!-- Usuários -->
 						@role('usuarios')
@@ -258,6 +209,7 @@
 						</li>
 						@endrole
 						<!-- /usuarios -->
+						
 						<hR>
 						<li class="nav-item">
 							<a href="#" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
