@@ -18,7 +18,7 @@ class PessoasController extends Controller
      */
     public function index()
     {
-        $pessoas = Pessoas::orderBy('nome')->paginate(15);
+        //$pessoas = Pessoas::orderBy('nome')->paginate(15);
         $pessoas = DB::table('pessoas')->select('pessoas.id', 'pessoas.nome', 'pessoas.origem', 'pessoas.telefone', 'pessoas.email', 'aux_setores.nome as setor', 'aux_funcoes.funcao', 'aux_tipos_contratos.tipo_contrato')
         ->leftJoin('aux_setores', 'aux_setores.id', 'pessoas.setor_id')
         ->leftJoin('aux_tipos_contratos', 'aux_tipos_contratos.id', 'pessoas.tipo_contrato_id')

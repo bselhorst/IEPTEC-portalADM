@@ -5,9 +5,6 @@
 @endsection
 
 @section('page-title-buttons')
-<a href="#" class="btn btn-link btn-float text-default"><i class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
-<a href="#" class="btn btn-link btn-float text-default"><i class="icon-calculator text-primary"></i> <span>Invoices</span></a>
-<a href="#" class="btn btn-link btn-float text-default"><i class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
 @endsection
 
 @section('breadcrumb')
@@ -61,7 +58,7 @@
                                 @if (count($tiposContratos) == 0)
                                     <option value="">Não há nenhum tipo de contrato</option>
                                 @else
-                                <option value="">Selecione um Setor</option>
+                                <option value="">Selecione um Tipo de Contrato</option>
                                 @endif
                                 @foreach ($tiposContratos as $tipoContrato)
                                     <option value="{{ $tipoContrato->id }}">{{ $tipoContrato->tipo_contrato }}</option>
@@ -78,7 +75,7 @@
                                 @if (count($funcoes) == 0)
                                     <option value="">Não há nenhuma função</option>
                                 @else
-                                <option value="">Selecione um Setor</option>
+                                <option value="">Selecione uma Função</option>
                                 @endif
                                 @foreach ($funcoes as $funcao)
                                     <option value="{{ $funcao->id }}">{{ $funcao->funcao }}</option>
