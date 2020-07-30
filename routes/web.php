@@ -127,3 +127,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //INDEX ESPECÍFICO DE CADA SISTEMA
 Route::get('/tecnologia', 'HomeController@indexTecnologia')->name('tecnologia');
+Route::get('/RH', 'HomeController@indexRH')->name('rh');

@@ -35,4 +35,9 @@ class HomeController extends Controller
     {
         return view('indexTecnologia');
     }
+
+    public function indexRH()
+    {
+        return view('indexRH');
+    }
 }

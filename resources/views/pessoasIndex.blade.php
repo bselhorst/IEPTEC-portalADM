@@ -22,7 +22,7 @@
                     <i class="fab-icon-close icon-cross2"></i>
                 </a>   
                 <ul class="fab-menu-inner">
-                    @permission('create-usuariossa')
+                    @permission('create-pessoas')
                     <li>
                         <div data-fab-label="Cadastrar">
                             <a href="{{ route('pessoas.create') }}" class="btn btn-light rounded-round btn-icon btn-float">
@@ -80,10 +80,10 @@
                                             <div class="list-icons-item dropdown">
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    @permission('update-usuariossa')
+                                                    @permission('update-pessoas')
                                                     <a href="{{ route('pessoas.edit', $pessoa->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Editar</a>
                                                     @endpermission
-                                                    @permission('delete-usuariossa')
+                                                    @permission('delete-pessoas')
                                                     <form method="POST" action="{{ route('pessoas.destroy', $pessoa->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')

@@ -5,17 +5,44 @@
     <!-- Grid -->
     <div class="mb-3 pt-2">
         <h6 class="mb-0 font-weight-semibold">
-            Sistemas
+            Módulos
+        </h6>
+    </div>
+    @role('pessoas')
+    <div class="row">
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+                <div class="card-body" style="padding: 0">
+                    <div class="card-img-actions" align="center" style="padding: 20px">
+                        <a href="{{ route('pessoas.index') }}" data-popup="lightbox">
+                            <i class="icon-users icon-4x"></i>
+                            <span class="card-img-actions-overlay card-img">
+                                <!--<i class="icon-plus3 icon-2x">Acessar</i>-->
+                                Acessar
+                            </span>
+                        </a>
+                        <br>
+                        <br>
+                        <h5 class="mb-0 font-weight-semibold">Pessoas</h5>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+    @endrole
+    @role('pessoas')
+    <div class="mb-3 pt-2">
+        <h6 class="mb-0 font-weight-semibold">
+            Tabelas Auxiliares
         </h6>
     </div>
     <div class="row">
-        @role('pessoas')
         <div class="col-xl-3 col-sm-6">
             <div class="card">
                 <div class="card-body" style="padding: 0">
                     <div class="card-img-actions" align="center" style="padding: 20px">
-                        <a href="{{ route('rh') }}" data-popup="lightbox">
-                            <i class="icon-collaboration icon-4x"></i>
+                        <a href="{{ route('funcoes.index') }}" data-popup="lightbox">
+                            <i class="icon-books icon-4x"></i>
                             <span class="card-img-actions-overlay card-img">
                                 <!--<i class="icon-plus3 icon-2x">Acessar</i>-->
                                 Acessar
@@ -23,19 +50,17 @@
                         </a>
                         <br>
                         <br>
-                        <h5 class="mb-0 font-weight-semibold">Recursos Humanos</h5>
+                        <h5 class="mb-0 font-weight-semibold">Funções</h5>
                     </div>
                 </div>
             </div>
         </div>
-        @endrole
-        @role('chamados')
         <div class="col-xl-3 col-sm-6">
             <div class="card">
                 <div class="card-body" style="padding: 0">
                     <div class="card-img-actions" align="center" style="padding: 20px">
-                        <a href="{{ route('tecnologia') }}" data-popup="lightbox">
-                            <i class="icon-windows icon-4x"></i>
+                        <a href="{{ route('setores.index') }}" data-popup="lightbox">
+                            <i class="icon-office icon-4x"></i>
                             <span class="card-img-actions-overlay card-img">
                                 <!--<i class="icon-plus3 icon-2x">Acessar</i>-->
                                 Acessar
@@ -43,48 +68,12 @@
                         </a>
                         <br>
                         <br>
-                        <h5 class="mb-0 font-weight-semibold">Tecnologia</h5>
+                        <h5 class="mb-0 font-weight-semibold">Setores</h5>
                     </div>
                 </div>
             </div>
-        </div>
-        @endrole
-        @role('usuarios')
-        <div class="col-xl-3 col-sm-6">
-            <div class="card">
-                <div class="card-body" style="padding: 0">
-                    <div class="card-img-actions" align="center" style="padding: 20px">
-                        <a href="{{ route('usuarios.index') }}" data-popup="lightbox">
-                            <i class="icon-users icon-4x"></i>
-                            <span class="card-img-actions-overlay card-img">
-                                Acessar
-                            </span>
-                        </a>
-                        <br>
-                        <br>
-                        <h5 class="mb-0 font-weight-semibold">Usuários</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endrole               
-        <!--<div class="col-xl-3 col-sm-6">
-            <div class="card">
-                <div class="card-body" style="padding: 0">
-                    <div class="card-img-actions" align="center" style="padding: 20px">
-                        <a href="{{ route('tecnologia') }}" data-popup="lightbox">
-                            <i class="icon-users icon-4x"></i>
-                            <span class="card-img-actions-overlay card-img">
-                                Acessar
-                            </span>
-                        </a>
-                        <br>
-                        <br>
-                        <h5 class="mb-0 font-weight-semibold">RH</h5>
-                    </div>
-                </div>
-            </div>
-        </div>-->               
+        </div>        
+        @endrole        
     </div>
     <!-- /grid -->
 
