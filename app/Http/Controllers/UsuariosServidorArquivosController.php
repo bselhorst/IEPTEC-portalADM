@@ -114,6 +114,8 @@ class UsuariosServidorArquivosController extends Controller
 
     public function search(Request $request){
         $search = $request->get('name');
+        $usuarios = DB::table('usuarios_servidor_arquivos')->select('usuarios_servidor_arquivos.id', 'usuarios_servidor_arquivos.setor_id', 'usuarios_servidor_arquivos.tipo', 'usuarios_servidor_arquivos.colaborador', 'usuarios_servidor_arquivos.login', 'usuarios_servidor_arquivos.status', 'aux_setores.nome as setor')
+        ->leftJoin('aux_setores', 'aux_setores.id', 'usuarios_servidor_arquivos.setor_id')
         ->where('colaborador', 'like', '%'.$search.'%')
         ->orderBy('usuarios_servidor_arquivos.colaborador', 'ASC')
         ->paginate(20);
