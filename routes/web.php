@@ -41,6 +41,7 @@ Route::group(['prefix' => 'usuarios', 'middleware' => ['role:usuarios']], functi
 //USUÁRIOS SERVIDOR DE ARQUIVO
 Route::group(['prefix' => 'usuariosSA', 'middleware' => ['role:usuarios-sa']], function() {
     Route::post('/', ['uses' => 'UsuariosServidorArquivosController@store', 'as' => 'usuariossa.store'])->middleware('permission:create-usuariossa');
+    Route::get('/search', ['uses' => 'UsuariosServidorArquivosController@search', 'as' => 'usuariossa.search']);
     Route::get('/', ['uses' => 'UsuariosServidorArquivosController@index', 'as' => 'usuariossa.index']);
     Route::get('/create', ['uses' => 'UsuariosServidorArquivosController@create', 'as' => 'usuariossa.create'])->middleware('permission:create-usuariossa');
     Route::delete('/{id}', ['uses' => 'UsuariosServidorArquivosController@destroy', 'as' => 'usuariossa.destroy'])->middleware('permission:delete-usuariossa');

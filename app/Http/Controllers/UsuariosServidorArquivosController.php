@@ -111,4 +111,12 @@ class UsuariosServidorArquivosController extends Controller
         $usuario->delete();
         return redirect('/usuariosSA')->with('success', 'Registro Excluído com sucesso!');
     }
+
+    public function search(Request $request){
+        $search = $request->get('name');
+        ->where('colaborador', 'like', '%'.$search.'%')
+        ->orderBy('usuarios_servidor_arquivos.colaborador', 'ASC')
+        ->paginate(20);
+        return view('usuariosServidorArquivosIndex', compact('usuarios'));
+    }
 }

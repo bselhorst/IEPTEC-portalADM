@@ -14,6 +14,26 @@
 @endsection
 
 @section('content')
+    <div class="card">
+        <div class="card-body">
+            <form class="form-validate-jquery" method="GET" action="/usuariosSA/search">
+                <fieldset class="mb-3">
+                    <legend class="text-uppercase font-size-sm font-weight-bold">Pesquisar</legend>
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-3">Colaborador<span class="text-danger">*</span></label>
+                        <div class="col-lg-9">
+                            <input type="text" name="name" class="form-control" placeholder="Nome Completo">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="d-flex justify-content-end align-items-center">
+                    <button type="submit" class="btn btn-primary ml-3">Pesquisar <i class="icon-search4 ml-2"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="row">
         <ul class="fab-menu fab-menu-fixed fab-menu-bottom-right" data-fab-toggle="click" data-fab-state="closed">
             <li>
@@ -96,15 +116,22 @@
                             @endforeach
                             <tr class="">
                                 <td colspan=6>
+                                    @php
+                                        if(request()->name){
+                                            $url = '&name='.request()->name;
+                                        }else{
+                                            $url='';
+                                        }   
+                                    @endphp
                                     <ul class="pagination pagination-pager pagination-rounded justify-content-center">
                                         @if ($usuarios->previousPageUrl())
-                                            <li class="page-item"><a href="{{ $usuarios->previousPageUrl() }}" class="page-link">← &nbsp; Anterior</a></li>
+                                            <li class="page-item"><a href="{{ $usuarios->previousPageUrl() }}{{ $url }}" class="page-link">← &nbsp; Anterior</a></li>
                                         @endif
                                         @if (!$usuarios->previousPageUrl())
                                             <li class="page-item disabled"><a href="{{ $usuarios->previousPageUrl() }}" class="page-link">← &nbsp; Anterior</a></li>
                                         @endif
                                         @if ($usuarios->nextPageUrl())
-                                            <li class="page-item"><a href="{{ $usuarios->nextPageUrl() }}" class="page-link">Próximo &nbsp; →</a></li>
+                                            <li class="page-item"><a href="{{ $usuarios->nextPageUrl() }}{{ $url }}" class="page-link">Próximo &nbsp; →</a></li>
                                         @endif
                                         @if (!$usuarios->nextPageUrl())
                                             <li class="page-item disabled"><a href="{{ $usuarios->nextPageUrl() }}" class="page-link">Próximo &nbsp; →</a></li>

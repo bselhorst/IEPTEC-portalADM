@@ -16,25 +16,25 @@
 @section('content')
 
     <!-- Form validation -->
-<div class="card">
-    <div class="card-body">
-        <form class="form-validate-jquery" method="GET" action="/usuarios/search">
-            <fieldset class="mb-3">
-                <legend class="text-uppercase font-size-sm font-weight-bold">Pesquisar</legend>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-3">Nome Completo<span class="text-danger">*</span></label>
-                    <div class="col-lg-9">
-                        <input type="text" name="name" class="form-control" placeholder="Nome Completo">
+    <div class="card">
+        <div class="card-body">
+            <form class="form-validate-jquery" method="GET" action="/usuarios/search">
+                <fieldset class="mb-3">
+                    <legend class="text-uppercase font-size-sm font-weight-bold">Pesquisar</legend>
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-3">Nome Completo<span class="text-danger">*</span></label>
+                        <div class="col-lg-9">
+                            <input type="text" name="name" class="form-control" placeholder="Nome Completo">
+                        </div>
                     </div>
-                </div>
-            </fieldset>
+                </fieldset>
 
-            <div class="d-flex justify-content-end align-items-center">
-                <button type="submit" class="btn btn-primary ml-3">Pesquisar <i class="icon-search4 ml-2"></i></button>
-            </div>
-        </form>
+                <div class="d-flex justify-content-end align-items-center">
+                    <button type="submit" class="btn btn-primary ml-3">Pesquisar <i class="icon-search4 ml-2"></i></button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
     <div class="row">
         <ul class="fab-menu fab-menu-fixed fab-menu-bottom-right" data-fab-toggle="click" data-fab-state="closed">
