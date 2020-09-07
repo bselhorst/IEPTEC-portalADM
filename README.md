@@ -31,11 +31,10 @@ Project created using:
 - MariaDB
 - Laratrust (For roles and permissions)
 
-This system was created to IEPTEC, however, it will grow even more according to the administration
+This system was created for IEPTEC, however, it will grow even more according to the administration
 ## View Images
 
 <p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/view1.png" width="800"></p>
-<p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/view2.png" width="800"></p>
 <p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/view3.png" width="800"></p>
 <p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/view4.png" width="800"></p>
 <p align="center"><img src="https://github.com/bselhorst/IEPTEC-portalADM/blob/master/readme-images/laratrust.png" width="800"></p>
