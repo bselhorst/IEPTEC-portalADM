@@ -71,6 +71,7 @@
                                 <th style="width: 50px">Tipo</th>
                                 <th style="width: 50px">Setor</th>
                                 <th style="width: 50px">Colaborador</th>
+                                <th style="width: 50px">Acesso</th>
                                 <th style="width: 50px">Login</th>
                                 <th style="width: 50px">Status</th>
                                 <th class="text-center" style="width: 20px;"></th>
@@ -79,7 +80,7 @@
     
                         <tbody>
                             <tr class="table-active table-border-double">
-                                <td colspan="5">Usuários do Sistema de Arquivos</td>
+                                <td colspan="6">Usuários do Sistema de Arquivos</td>
                                 <td class="text-right">
                                     <span class="badge bg-blue badge-pill">{{ $usuarios->total() }}</span>
                                 </td>
@@ -87,10 +88,23 @@
     
                             <!--Ticket começa aqui-->
                             @foreach($usuarios as $usuario)
+                                @php 
+                                    $folders = DB::table('usa_permissions')
+                                    ->select('aux_usa_folders.nome')
+                                    ->leftJoin('aux_usa_folders', 'aux_usa_folders.id', 'usa_permissions.folder_id')
+                                    ->where('user_id', $usuario->id)
+                                    ->orderBy('aux_usa_folders.nome')
+                                    ->get() 
+                                @endphp
                                 <tr>
                                     <td>{{ $usuario->tipo }}</td>
                                     <td>{{ $usuario->setor }}</td>
                                     <td>{{ $usuario->colaborador }}</td>
+                                    <td>
+                                        @foreach ($folders as $folder)
+                                            {{ "[".$folder->nome."]" }}<br>
+                                        @endforeach                                        
+                                    </td>
                                     <td>{{ $usuario->login }}</td>
                                     <td>{{ $usuario->status }}</td>
                                     <td class="text-center">
@@ -115,7 +129,7 @@
                                 </tr>
                             @endforeach
                             <tr class="">
-                                <td colspan=6>
+                                <td colspan=7>
                                     @php
                                         if(request()->name){
                                             $url = '&name='.request()->name;

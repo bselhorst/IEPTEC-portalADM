@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\UsuariosServidorArquivos;
 use App\AuxSetores;
 use Illuminate\Support\Facades\DB;
+use App\AuxUsaFolder;
+use App\UsaPermission;
 
 class UsuariosServidorArquivosController extends Controller
 {
@@ -19,7 +21,6 @@ class UsuariosServidorArquivosController extends Controller
         //$usuarios = UsuariosServidorArquivos::orderBy('colaborador')->paginate(10);
         $usuarios = DB::table('usuarios_servidor_arquivos')->select('usuarios_servidor_arquivos.id', 'usuarios_servidor_arquivos.setor_id', 'usuarios_servidor_arquivos.tipo', 'usuarios_servidor_arquivos.colaborador', 'usuarios_servidor_arquivos.login', 'usuarios_servidor_arquivos.status', 'aux_setores.nome as setor')
         ->leftJoin('aux_setores', 'aux_setores.id', 'usuarios_servidor_arquivos.setor_id')
-        //->where('finished_at', '=', null)
         ->orderBy('usuarios_servidor_arquivos.colaborador', 'ASC')
         ->paginate(20);
         return view('usuariosServidorArquivosIndex', compact('usuarios'));
@@ -33,7 +34,8 @@ class UsuariosServidorArquivosController extends Controller
     public function create()
     {
         $setores = AuxSetores::orderBy('nome')->get();
-        return view('usuariosServidorArquivosCreate', compact('setores'));
+        $folders = AuxUsaFolder::orderBy('nome')->get();
+        return view('usuariosServidorArquivosCreate', compact('setores', 'folders'));
     }
 
     /**
@@ -51,7 +53,14 @@ class UsuariosServidorArquivosController extends Controller
             'login' => 'required',
             'status' => 'required',
         ]);
+        $data = $request->all();
         $show = UsuariosServidorArquivos::create($validatedData);
+        foreach($data['acesso'] as $acesso){
+            $vd['user_id'] = $show['id'];
+            $vd['folder_id'] = $acesso;
+            UsaPermission::create($vd);
+        }
+
         return redirect('/usuariosSA')->with('success', 'Usuário criado com sucesso!');
     }
 
@@ -76,7 +85,9 @@ class UsuariosServidorArquivosController extends Controller
     {
         $usuario = UsuariosServidorArquivos::findOrFail($id);
         $setores = AuxSetores::orderBy('nome')->get();
-        return view('usuariosServidorArquivosEdit', compact('usuario', 'setores'));
+        $folders = AuxUsaFolder::orderBy('nome')->get();
+        $permissions = DB::table('usa_permissions')->select('folder_id')->where('user_id', $id)->get();
+        return view('usuariosServidorArquivosEdit', compact('usuario', 'setores', 'folders', 'permissions'));
     }
 
     /**
@@ -96,6 +107,13 @@ class UsuariosServidorArquivosController extends Controller
             'status' => '',
         ]);
         UsuariosServidorArquivos::whereId($id)->update($validatedData);
+        DB::table('usa_permissions')->where('user_id', $id)->delete();
+        $data = $request->all();
+        foreach($data['acesso'] as $acesso){
+            $vd['user_id'] = $id;
+            $vd['folder_id'] = $acesso;
+            UsaPermission::create($vd);
+        }
         return redirect('/usuariosSA')->with('success', 'Registro Editado com sucesso!');
     }
 

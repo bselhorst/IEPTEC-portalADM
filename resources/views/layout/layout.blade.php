@@ -40,6 +40,7 @@
     <script src="{{ asset('backend/global_assets/js/demo_pages/dashboard.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/demo_pages/form_validation.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/demo_pages/form_select2.js') }}"></script>
+	<script src="{{ asset('backend/global_assets/js/demo_pages/form_multiselect.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/demo_pages/components_modals.js') }}"></script>
 	<!-- /theme JS files -->
 
@@ -206,6 +207,7 @@
 							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
 								<li class="nav-item"><a href="{{ route('chamados.create') }}" class="nav-link">Cadastrar</a></li>
 								<li class="nav-item"><a href="{{ route('chamados.index') }}" class="nav-link">Listar</a></li>
+								<li class="nav-item"><a href="{{ route('chamados.search') }}" class="nav-link">Pesquisar</a></li>
 							</ul>
 						</li>
 						@endrole

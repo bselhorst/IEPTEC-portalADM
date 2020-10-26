@@ -28,7 +28,6 @@
                         </div>
                     </div>
                 </fieldset>
-
                 <div class="d-flex justify-content-end align-items-center">
                     <button type="submit" class="btn btn-primary ml-3">Pesquisar <i class="icon-search4 ml-2"></i></button>
                 </div>

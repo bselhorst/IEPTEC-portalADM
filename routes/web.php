@@ -20,6 +20,7 @@ Auth::routes();
 Route::group(['prefix' => 'chamados', 'middleware' => ['role:chamados']], function() {
     Route::post('/', ['uses' => 'ChamadosController@store', 'as' => 'chamados.store'])->middleware('permission:create-chamados');
     Route::get('/', ['uses' => 'ChamadosController@index', 'as' => 'chamados.index'])->middleware('permission:read-chamados');
+    Route::get('/search', ['uses' => 'ChamadosController@search', 'as' => 'chamados.search'])->middleware('permission:read-chamados');
     Route::get('/create', ['uses' => 'ChamadosController@create', 'as' => 'chamados.create'])->middleware('permission:create-chamados');
     Route::delete('/{id}', ['uses' => 'ChamadosController@destroy', 'as' => 'chamados.destroy'])->middleware('permission:delete-chamados');
     Route::patch('/{id}', ['uses' => 'ChamadosController@update', 'as' => 'chamados.update'])->middleware('permission:update-chamados');

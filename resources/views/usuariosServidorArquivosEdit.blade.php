@@ -91,8 +91,28 @@
                         </div>
                     </div>
                 </div>
+                @php
+                    $collection = collect();
+                @endphp
+                @foreach ($permissions as $permission)
+                    @php
+                        $collection->push($permission->folder_id);    
+                    @endphp
+                @endforeach
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-3">Acesso <span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                        <div class="form-group">
+                            <select class="form-control multiselect" multiple="multiple" name="acesso[]">
+                                @foreach ($folders as $folder)
+                                    <option value="{{ $folder->id }}" {{ ($collection->contains($folder->id))?'selected':'' }}>{{ $folder->nome }}</option>
+                                @endforeach 
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
             </fieldset>
-
             <div class="d-flex justify-content-end align-items-center">
                 <button type="reset" class="btn btn-light" id="reset">Reset <i class="icon-reload-alt ml-2"></i></button>
                 <button type="submit" class="btn btn-primary ml-3">Editar <i class="icon-paperplane ml-2"></i></button>

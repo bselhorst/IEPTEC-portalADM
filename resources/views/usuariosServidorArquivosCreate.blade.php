@@ -90,6 +90,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-3">Acesso <span class="text-danger">*</span></label>
+                    <div class="col-lg-9">
+                        <div class="form-group">
+                            <select class="form-control multiselect" multiple="multiple" name="acesso[]">
+                                @foreach ($folders as $folder)
+                                    <option value="{{ $folder->id }}">{{ $folder->nome }}</option>
+                                @endforeach 
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </fieldset>
 
             <div class="d-flex justify-content-end align-items-center">

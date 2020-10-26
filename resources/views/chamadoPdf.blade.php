@@ -11,7 +11,7 @@
         <img src="{{public_path('backend/images/acre.png')}}" alt="Logo" height="75px">
     </div>
     <div align="center" style="padding-top: 5px">
-        <b>Instituto Estadual de Educação Profissional e Tecnológico - IEPTEC</b>
+        <b>Instituto de Educação Profissional e Tecnológica - IEPTEC Dom Moacyr</b>
         <br>
         <b>Divisão de Tecnologia da Informação</b>
     </div>

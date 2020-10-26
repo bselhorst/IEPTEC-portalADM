@@ -156,7 +156,7 @@ class ChamadosController extends Controller
     public function finish(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'solucao' => 'required|max:255',
+            'solucao' => 'required',
             'user_id' => 'required',
         ]);
         $validatedData['finished_at'] = now();
@@ -175,6 +175,25 @@ class ChamadosController extends Controller
         $pdf = PDF::loadView('chamadoPdf', compact('chamado', 'chamadoCompleto'));
         return $pdf->stream();
         //return $pdf->download('chamadoPdf');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->get('categoria_id');
+        $categorias = AuxCategorias::all()->sortBy('categoria');
+        if($search != ''){
+            $chamados = DB::table('chamados')->select('chamados.id', 'aux_categorias.categoria', 'chamados.created_at', 'chamados.categoria_id', 'chamados.user_id', 'chamados.descricao')
+            ->leftJoin('aux_categorias', 'aux_categorias.id', 'chamados.categoria_id')
+            ->where('aux_categorias.id', '=', $search)
+            ->orderBy('chamados.id', 'DESC')
+            ->paginate(10);
+        }else{
+            $chamados = DB::table('chamados')->select('chamados.id', 'aux_categorias.categoria', 'chamados.created_at', 'chamados.categoria_id', 'chamados.user_id', 'chamados.descricao')
+            ->leftJoin('aux_categorias', 'aux_categorias.id', 'chamados.categoria_id')
+            ->orderBy('chamados.id', 'DESC')
+            ->paginate(10);
+        }
+        return view('chamadoSearch', compact('chamados', 'categorias'));
     }
 
 }
