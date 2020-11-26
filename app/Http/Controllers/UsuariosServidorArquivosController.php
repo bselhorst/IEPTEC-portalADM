@@ -109,10 +109,12 @@ class UsuariosServidorArquivosController extends Controller
         UsuariosServidorArquivos::whereId($id)->update($validatedData);
         DB::table('usa_permissions')->where('user_id', $id)->delete();
         $data = $request->all();
-        foreach($data['acesso'] as $acesso){
-            $vd['user_id'] = $id;
-            $vd['folder_id'] = $acesso;
-            UsaPermission::create($vd);
+        if(property_exists((object) $data,'acesso')){
+            foreach($data['acesso'] as $acesso){
+                $vd['user_id'] = $id;
+                $vd['folder_id'] = $acesso;
+                UsaPermission::create($vd);
+            }
         }
         return redirect('/usuariosSA')->with('success', 'Registro Editado com sucesso!');
     }

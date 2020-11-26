@@ -15,6 +15,42 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+//AUX_UNIDADES
+Route::group(['prefix' => 'auxunidades', 'middleware' => ['role:almoxarifado']], function(){
+    Route::post('/', ['uses' => 'AuxUnidadesController@store', 'as' => 'auxunidades.store']);
+    Route::get('/', ['uses' => 'AuxUnidadesController@index', 'as' => 'auxunidades.index']);
+    Route::delete('/{id}', ['uses' => 'AuxUnidadesController@destroy', 'as' => 'auxunidades.destroy']);
+    Route::patch('/{id}', ['uses' => 'AuxUnidadesController@update', 'as' => 'auxunidades.update']);
+    Route::get('/{id}/edit', ['uses' => 'AuxUnidadesController@edit', 'as' => 'auxunidades.edit']);
+});
+
+//AUX_FORNECEDORES
+Route::group(['prefix' => 'auxfornecedores', 'middleware' => ['role:almoxarifado']], function(){
+    Route::post('/', ['uses' => 'AuxFornecedoresController@store', 'as' => 'auxfornecedores.store']);
+    Route::get('/', ['uses' => 'AuxFornecedoresController@index', 'as' => 'auxfornecedores.index']);
+    Route::delete('/{id}', ['uses' => 'AuxFornecedoresController@destroy', 'as' => 'auxfornecedores.destroy']);
+    Route::patch('/{id}', ['uses' => 'AuxFornecedoresController@update', 'as' => 'auxfornecedores.update']);
+    Route::get('/{id}/edit', ['uses' => 'AuxFornecedoresController@edit', 'as' => 'auxfornecedores.edit']);
+});
+
+//ALMOXARIFADO
+Route::group(['prefix' => 'almoxarifado', 'middleware' => ['role:almoxarifado']], function(){
+    Route::post('/', ['uses' => 'AlmoxarifadoItemsController@store', 'as' => 'almoxarifado.store']);
+    Route::get('/', ['uses' => 'AlmoxarifadoItemsController@index', 'as' => 'almoxarifado.index']);
+    Route::get('/search', ['uses' => 'AlmoxarifadoItemsController@search', 'as' => 'almoxarifado.search']);
+    Route::delete('/{id}', ['uses' => 'AlmoxarifadoItemsController@destroy', 'as' => 'almoxarifado.destroy']);
+    Route::patch('/{id}', ['uses' => 'AlmoxarifadoItemsController@update', 'as' => 'almoxarifado.update']);
+    Route::get('/create', ['uses' => 'AlmoxarifadoItemsController@create', 'as' => 'almoxarifado.create']);
+    Route::get('/retirar', ['uses' => 'AlmoxarifadoItemsController@retirar', 'as' => 'almoxarifado.retirar']);
+    Route::get('/{id}/edit', ['uses' => 'AlmoxarifadoItemsController@edit', 'as' => 'almoxarifado.edit']);
+    Route::post('/confirmRetirar', ['uses' => 'AlmoxarifadoItemsController@confirmRetirar', 'as' => 'almoxarifado.confirmRetirar']);
+    Route::get('/historicoRetiradas', ['uses' => 'AlmoxarifadoItemsController@historico_retiradas', 'as' => 'almoxarifado.historico_retiradas']);
+    Route::get('/historicoEntradas', ['uses' => 'AlmoxarifadoItemsController@historico_entradas', 'as' => 'almoxarifado.historico_entradas']);
+    Route::post('/{id}/entrada', ['uses' => 'AlmoxarifadoItemsController@entrada', 'as' => 'almoxarifado.entrada']);
+    Route::patch('/{id}/cancelarEntrada', ['uses' => 'AlmoxarifadoItemsController@cancelarEntrada', 'as' => 'almoxarifado.cancelarEntrada']);
+    Route::patch('/{id}/cancelarRetirada', ['uses' => 'AlmoxarifadoItemsController@cancelarRetirada', 'as' => 'almoxarifado.cancelarRetirada']);
+});
+
 //TECNOLOGIA
 //CHAMADOS
 Route::group(['prefix' => 'chamados', 'middleware' => ['role:chamados']], function() {

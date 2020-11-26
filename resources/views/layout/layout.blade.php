@@ -133,7 +133,7 @@
 							<div class="media-body">
 								<div class="media-title font-weight-semibold">{{ $user[0]." ".last($user) }}</div>
 								<div class="font-size-xs opacity-50">
-									Analista de Sistemas
+									Funcionário
 								</div>
 							</div>
 
@@ -160,6 +160,25 @@
 							</a>
 						</li>
 						<!-- /main -->
+
+                        {{-- Almoxarifado --}}
+                        @role('almoxarifado')
+						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Almoxarifado</div> <i class="icon-menu" title="Forms"></i></li>
+                            @role('almoxarifado')
+                            <li class="nav-item nav-item-submenu">
+                                <a href="#" class="nav-link"><i class="icon-price-tags"></i> <span>Almoxarifado</span></a>
+                                <ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+                                    <li class="nav-item"><a href="{{ route('auxfornecedores.index') }}" class="nav-link">Aux. Fornecedores</a></li>
+                                    <li class="nav-item"><a href="{{ route('auxunidades.index') }}" class="nav-link">Aux. Unidades</a></li>
+                                    <li class="nav-item"><a href="{{ route('almoxarifado.index') }}" class="nav-link">Almoxarifado</a></li>
+                                    <li class="nav-item"><a href="{{ route('almoxarifado.retirar') }}" class="nav-link">Retirar Itens</a></li>
+                                    <li class="nav-item"><a href="{{ route('almoxarifado.historico_entradas') }}" class="nav-link">Histórico de Entradas</a></li>
+                                    <li class="nav-item"><a href="{{ route('almoxarifado.historico_retiradas') }}" class="nav-link">Histórico de Retiradas</a></li>
+                                </ul>
+                            </li>
+                            @endrole
+                        @endrole
+                        {{-- Almoxarifado --}}
 
 						<!-- RH -->
 						@role(['chamados', 'auxiliar-tecnologia', 'usuarios-sa'])
@@ -251,7 +270,7 @@
 				</div>
 				<!-- /main navigation -->
 			</div>
-			<!-- /sidebar content -->			
+			<!-- /sidebar content -->
 		</div>
 		<!-- /main sidebar -->
     <!-- Main content -->
@@ -264,7 +283,7 @@
                 <h4>@yield('page-title')</h4>
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
-            
+
             <div class="header-elements d-none">
                 <div class="d-flex justify-content-center">
                     @yield('page-title-buttons')
@@ -281,12 +300,12 @@
             </div>
         </div>
         <!-- /page header -->
-       
+
         <!-- Content area -->
         <div class="content">
-        
+
         @yield('content')
-        
+
         </div>
         <!-- /content area -->
 
