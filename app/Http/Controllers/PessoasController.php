@@ -18,14 +18,8 @@ class PessoasController extends Controller
      */
     public function index()
     {
-        //$pessoas = Pessoas::orderBy('nome')->paginate(15);
-        $pessoas = DB::table('pessoas')->select('pessoas.id', 'pessoas.nome', 'pessoas.origem', 'pessoas.telefone', 'pessoas.email', 'aux_setores.nome as setor', 'aux_funcoes.funcao', 'aux_tipos_contratos.tipo_contrato')
-        ->leftJoin('aux_setores', 'aux_setores.id', 'pessoas.setor_id')
-        ->leftJoin('aux_tipos_contratos', 'aux_tipos_contratos.id', 'pessoas.tipo_contrato_id')
-        ->leftJoin('aux_funcoes', 'aux_funcoes.id', 'pessoas.funcao_id')
-        ->orderBy('pessoas.nome')
-        ->paginate(5);
-        return view('pessoasIndex', compact('pessoas'));
+        $data = Pessoas::orderBy('nome')->paginate(15);
+        return view('pessoasIndex', compact('data'));
     }
 
     /**
@@ -35,10 +29,7 @@ class PessoasController extends Controller
      */
     public function create()
     {
-        $setores = AuxSetores::all()->sortBy('nome');
-        $tiposContratos = AuxTiposContratos::all()->sortBy('tipo_contrato');
-        $funcoes = AuxFuncoes::all()->sortBy('funcao');
-        return view('pessoasCreate', compact('setores', 'tiposContratos', 'funcoes'));
+        return view('pessoasForm');
     }
 
     /**
@@ -50,16 +41,29 @@ class PessoasController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'setor_id' => 'required',
-            'tipo_contrato_id' => 'required',
-            'funcao_id' => 'required',
             'nome' => 'required',
-            'origem' => 'required',
-            'telefone' => 'required',
-            'email' => 'required',
+            'filiacao1' => '',
+            'filiacao2' => '',
+            'rg' => '',
+            'orgaoExp' => '',
+            'cpf' => '',
+            'sexo' => '',
+            'dataNascimento' => '',
+            'rua' => '',
+            'numero' => '',
+            'apt' => '',
+            'bairro' => '',
+            'municipio' => '',
+            'complemento' => '',
+            'cep' => '',
+            'telefone' => '',
+            'celular' => '',
+            'email' => '',
+            'nomeDeEmergencia' => '',
+            'numeroEmergencia' => '',
         ]);
-        $create = Pessoas::create($validatedData);
-        return redirect('/pessoas')->with('success', 'Dado adicionado com sucesso');
+        $show = Pessoas::create($validatedData);
+        return redirect('/pessoas')->with('success', 'Registro adicionado com sucesso!');
     }
 
     /**
@@ -81,11 +85,8 @@ class PessoasController extends Controller
      */
     public function edit($id)
     {
-        $setores = AuxSetores::all()->sortBy('nome');
-        $tiposContratos = AuxTiposContratos::all()->sortBy('tipo_contrato');
-        $funcoes = AuxFuncoes::all()->sortBy('funcao');
-        $pessoa = Pessoas::findOrFail($id);
-        return view('pessoasEdit', compact('setores', 'tiposContratos', 'funcoes', 'pessoa'));
+        $data = Pessoas::findOrFail($id);
+        return view('pessoasForm', compact('data'));
     }
 
     /**
@@ -98,22 +99,28 @@ class PessoasController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'setor_id' => 'required',
-            'tipo_contrato_id' => 'required',
-            'funcao_id' => 'required',
             'nome' => 'required',
-            'origem' => '',
-            'telefone' => 'required',
-            'email' => 'required',
+            'filiacao1' => '',
+            'filiacao2' => '',
+            'rg' => '',
+            'orgaoExp' => '',
+            'cpf' => '',
+            'sexo' => '',
+            'dataNascimento' => '',
+            'rua' => '',
+            'numero' => '',
+            'apt' => '',
+            'bairro' => '',
+            'municipio' => '',
+            'complemento' => '',
+            'cep' => '',
+            'telefone' => '',
+            'celular' => '',
+            'email' => '',
+            'nomeDeEmergencia' => '',
+            'numeroEmergencia' => '',
         ]);
-        //3 formas de fazer
-        //A primeira é usando uma variável e depois usar o update
-        //$pessoa = Pessoas::findOrFail($id);
-        //$pessoa->update($validatedData);
-        //A segunda é usando diretamente o findOrFail com update
-        Pessoas::findOrFail($id)->update($validatedData);
-        //A terceira é com whereId
-        //Pessoas::whereId($id)->update($validatedData);
+        Pessoas::whereId($id)->update($validatedData);
         return redirect('/pessoas')->with('success', 'Registro editado com sucesso!');
     }
 
