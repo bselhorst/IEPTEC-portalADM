@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PessoaContratos extends Model
 {
     protected $fillable = [
+        'pessoa_id',
         'matricula',
         'termo_portaria',
         'carga_horaria',

@@ -97,13 +97,13 @@ Route::group(['prefix' => 'pessoas', 'middleware' => ['role:pessoas']], function
 });
 
 //PESSOAS CONTRATOS
-Route::group(['prefix' => 'contratos', 'middleware' => ['role:pessoas']], function() {
-    Route::post('/', ['uses' => 'PessoasController@store', 'as' => 'pessoas.store'])->middleware('permission:create-pessoas');
-    Route::get('/', ['uses' => 'PessoasController@index', 'as' => 'pessoas.index']);
-    Route::get('/create', ['uses' => 'PessoasController@create', 'as' => 'pessoas.create'])->middleware('permission:create-pessoas');
-    Route::delete('/{id}', ['uses' => 'PessoasController@destroy', 'as' => 'pessoas.destroy'])->middleware('permission:delete-pessoas');
-    Route::patch('/{id}', ['uses' => 'PessoasController@update', 'as' => 'pessoas.update'])->middleware('permission:update-pessoas');
-    Route::get('/{id}/edit', ['uses' => 'PessoasController@edit', 'as' => 'pessoas.edit'])->middleware('permission:update-pessoas');
+Route::group(['prefix' => '{pessoa_id}/contratos', 'middleware' => ['role:pessoas']], function() {
+    Route::post('/', ['uses' => 'PessoaContratosController@store', 'as' => 'contratos.store'])->middleware('permission:create-pessoas');
+    Route::get('/', ['uses' => 'PessoaContratosController@index', 'as' => 'contratos.index']);
+    Route::get('/create', ['uses' => 'PessoaContratosController@create', 'as' => 'contratos.create'])->middleware('permission:create-pessoas');
+    Route::delete('/{id}', ['uses' => 'PessoaContratosController@destroy', 'as' => 'contratos.destroy'])->middleware('permission:delete-pessoas');
+    Route::patch('/{id}', ['uses' => 'PessoaContratosController@update', 'as' => 'contratos.update'])->middleware('permission:update-pessoas');
+    // Route::get('/{id}/edit', ['uses' => 'PessoasController@edit', 'as' => 'pessoas.edit'])->middleware('permission:update-pessoas');
 });
 
 //AUXILIARES DE TECNOLOGIA

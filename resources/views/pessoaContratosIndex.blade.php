@@ -10,7 +10,8 @@
 
 @section('breadcrumb')
 <a href="tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="#" class="breadcrumb-item active"><i class="icon-users mr-2"></i> Pessoas</a>
+<a href="/pessoas" class="breadcrumb-item"><i class="icon-users mr-2"></i> Pessoas</a>
+<a href="#" class="breadcrumb-item active"><i class="icon-file-text2 mr-2"></i> Contratos</a>
 @endsection
 
 @section('content')
@@ -47,7 +48,7 @@
                     {{-- @role('mediador') --}}
                     <li>
                         <div data-fab-label="Cadastrar">
-                            <a href="{{ route('pessoas.create') }}" class="btn btn-light rounded-round btn-icon btn-float">
+                            <a href="{{ route('contratos.create', $pessoa_id) }}" class="btn btn-light rounded-round btn-icon btn-float">
                                 <i class="icon-plus2"></i>
                             </a>
                         </div>
@@ -63,17 +64,15 @@
                     <table class="table text-nowrap">
                         <thead>
                             <tr>
-                                <th colspan="5">Tabela de Pessoas</th>
+                                <th colspan="3">Tabela de Pessoas</th>
                                 <th class="text-center" style="width: 20px;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="table-active table-border-double">
-                                <td>Nome</td>
-                                <td>CPF</td>
-                                <td>Celular</td>
-                                <td>Email</td>
-                                <td>Data de Nascimento</td>
+                                <td>termo_portaria</td>
+                                <td>Data Nomeação</td>
+                                <td>Data Exoneração</td>
                                 <td class="text-right">
                                     <span class="badge bg-blue badge-pill">{{$data->total()}}</span>
                                 </td>
@@ -81,19 +80,13 @@
                             @foreach($data as $item)
                                 <tr>
                                     <td>
-                                        <div class="font-weight-semibold">{{ $item->nome }}</div>
+                                        <div class="font-weight-semibold">{{ $item->termo_portaria }}</div>
                                     </td>
                                     <td>
-                                        <div class="font-weight-semibold">{{ $item->cpf }}</div>
+                                        <div class="font-weight-semibold">{{ date('d/m/Y', strtotime($item->data_nomeacao)) }}</div>
                                     </td>
                                     <td>
-                                        <div class="font-weight-semibold">{{ $item->celular }}</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-weight-semibold">{{ $item->email }}</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-weight-semibold">{{ date('d/m/Y', strtotime($item->dataNascimento)) }}</div>
+                                        <div class="font-weight-semibold">{{ ($item->data_exoneracao) ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-' }}</div>
                                     </td>
                                     <td class="text-center">
                                         <div class="list-icons">
@@ -101,8 +94,7 @@
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a href="{{ route('pessoas.edit', $item->id) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
-                                                    <a href="{{ route('pessoas.edit', $item->id) }}" class="dropdown-item"><i class="icon-pencil"></i> Contratos</a>
-                                                    <form method="POST" action="{{ route('pessoas.destroy', $item->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
+                                                    <form method="POST" action="{{ route('contratos.destroy', [$pessoa_id, $item->id]) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="dropdown-item"><i class="icon-cross2 text-danger"></i> Deletar</button>
@@ -114,7 +106,7 @@
                                 </tr>
                             @endforeach
                             <tr class="">
-                                <td colspan="6">
+                                <td colspan="5">
                                     @php
                                         if(request()->name){
                                             $url = '&name='.request()->name;

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Pessoas;
+use App\PessoaContratos;
 
 class PessoaContratosController extends Controller
 {
@@ -11,9 +13,10 @@ class PessoaContratosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($pessoa_id)
     {
-        return view('pessoaContratosIndex');
+        $data = PessoaContratos::where('pessoa_id', $pessoa_id)->orderBy('id', 'desc')->paginate(15);
+        return view('pessoaContratosIndex', compact('data', 'pessoa_id'));
     }
 
     /**
@@ -21,9 +24,9 @@ class PessoaContratosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($pessoa_id)
     {
-        //
+        return view('pessoaContratosForm', compact('pessoa_id'));
     }
 
     /**
@@ -34,7 +37,20 @@ class PessoaContratosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'pessoa_id' => 'required',
+            'matricula' => '',
+            'termo_portaria' => '',
+            'carga_horaria' => '',
+            'salario' => '',
+            'data_nomeacao' => 'required',
+            'data_exoneracao' => '',
+        ]);
+        $validatedData['salario'] = str_replace("R$ ", "", $validatedData['salario']);
+        $validatedData['salario'] = str_replace(".", "", $validatedData['salario']);
+        $validatedData['salario'] = str_replace(",", ".", $validatedData['salario']);
+        PessoaContratos::create($validatedData);
+        return redirect('/'.$validatedData['pessoa_id'].'/contratos')->with('success', 'Registro adicionado com sucesso!');
     }
 
     /**
@@ -56,7 +72,7 @@ class PessoaContratosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data
     }
 
     /**
@@ -77,8 +93,9 @@ class PessoaContratosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($pessoa_id, $id)
     {
-        //
+        PessoaContratos::findOrFail($id)->delete();
+        return redirect('/'.$pessoa_id.'/contratos')->with('success', 'Registro deletado com sucesso!');
     }
 }
