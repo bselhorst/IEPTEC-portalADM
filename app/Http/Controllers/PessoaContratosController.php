@@ -70,9 +70,10 @@ class PessoaContratosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($pessoa_id, $id)
     {
-        $data
+        $data = PessoaContratos::findOrFail($id);
+        return view('pessoaContratosForm', compact('pessoa_id', 'data'));
     }
 
     /**
@@ -82,9 +83,22 @@ class PessoaContratosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $pessoa_id, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'pessoa_id' => 'required',
+            'matricula' => '',
+            'termo_portaria' => '',
+            'carga_horaria' => '',
+            'salario' => '',
+            'data_nomeacao' => 'required',
+            'data_exoneracao' => '',
+        ]);
+        $validatedData['salario'] = str_replace("R$ ", "", $validatedData['salario']);
+        $validatedData['salario'] = str_replace(".", "", $validatedData['salario']);
+        $validatedData['salario'] = str_replace(",", ".", $validatedData['salario']);
+        PessoaContratos::whereId($id)->update($validatedData);
+        return redirect('/'.$validatedData['pessoa_id'].'/contratos')->with('success', 'Registro adicionado com sucesso!');
     }
 
     /**

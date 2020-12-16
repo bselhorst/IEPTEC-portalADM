@@ -103,7 +103,7 @@ Route::group(['prefix' => '{pessoa_id}/contratos', 'middleware' => ['role:pessoa
     Route::get('/create', ['uses' => 'PessoaContratosController@create', 'as' => 'contratos.create'])->middleware('permission:create-pessoas');
     Route::delete('/{id}', ['uses' => 'PessoaContratosController@destroy', 'as' => 'contratos.destroy'])->middleware('permission:delete-pessoas');
     Route::patch('/{id}', ['uses' => 'PessoaContratosController@update', 'as' => 'contratos.update'])->middleware('permission:update-pessoas');
-    // Route::get('/{id}/edit', ['uses' => 'PessoasController@edit', 'as' => 'pessoas.edit'])->middleware('permission:update-pessoas');
+    Route::get('/{id}/edit', ['uses' => 'PessoaContratosController@edit', 'as' => 'contratos.edit'])->middleware('permission:update-pessoas');
 });
 
 //AUXILIARES DE TECNOLOGIA

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Pessoas;
+use App\PessoaContratos;
 use App\AuxSetores;
 use App\AuxTiposContratos;
 use App\AuxFuncoes;
@@ -18,7 +19,23 @@ class PessoasController extends Controller
      */
     public function index()
     {
-        $data = Pessoas::orderBy('nome')->paginate(15);
+        //$data = Pessoas::orderBy('nome')->paginate(15);
+
+
+        $contratos = DB::table('pessoa_contratos')->select('pessoa_id', 'data_nomeacao', 'data_exoneracao')->orderBy('pessoa_contratos.id', 'DESC');
+        $data = DB::table('pessoas')
+        ->leftJoinSub($contratos, 'pessoa_contratos', function ($join){
+            $join->on('pessoas.id', '=', 'pessoa_contratos.pessoa_id');
+        })->orderBy('pessoas.nome')
+        ->paginate(15);
+
+        // $data = DB::table('pessoas')
+        // ->select('pessoas.id', 'pessoas.nome', 'pessoa_contratos.data_nomeacao', 'pessoa_contratos.data_exoneracao')
+        // ->leftJoin('pessoa_contratos', 'pessoas.id', 'pessoa_contratos.pessoa_id')
+        // ->orderBy('pessoas.nome')
+        // ->orderBy('pessoa_contratos.id', 'DESC')
+        // ->paginate(15);
+
         return view('pessoasIndex', compact('data'));
     }
 

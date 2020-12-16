@@ -70,10 +70,15 @@
                         <tbody>
                             <tr class="table-active table-border-double">
                                 <td>Nome</td>
-                                <td>CPF</td>
+                                <td>Data Nomeação</td>
+                                <td>Data de Exoneração</td>
+                                <td>Duração</td>
+                                <td>Observação</td>
+                                <td>Status</td>
+                                {{-- <td>CPF</td>
                                 <td>Celular</td>
                                 <td>Email</td>
-                                <td>Data de Nascimento</td>
+                                <td>Data de Nascimento</td> --}}
                                 <td class="text-right">
                                     <span class="badge bg-blue badge-pill">{{$data->total()}}</span>
                                 </td>
@@ -84,6 +89,35 @@
                                         <div class="font-weight-semibold">{{ $item->nome }}</div>
                                     </td>
                                     <td>
+                                        <div class="font-weight-semibold">
+                                            {{ ($item->data_nomeacao) ? date('d/m/Y', strtotime($item->data_nomeacao)) : 'SEM CONTRATO' }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="font-weight-semibold">
+                                            {{ $item->data_exoneracao ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-' }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @php
+                                            $start_time = \Carbon\Carbon::parse($item->data_nomeacao);
+                                            $finish_time = \Carbon\Carbon::parse($item->data_exoneracao);
+                                            $result = $start_time->diffInDays($finish_time, false);
+                                        @endphp
+                                        {{ ($item->data_exoneracao)? $result." dias" : 'INDETERMINADO' }}
+                                    </td>
+                                    <td>
+                                        @php
+                                            $date = \Carbon\Carbon::parse(date('Y-m-d'));
+                                            $duration = \Carbon\Carbon::parse($item->data_exoneracao);
+                                            $result2 = $date->diffInDays($duration, false);
+                                        @endphp
+                                        {{ ($result2 >= 0 ) ? $result2." dias para o vencimento" : $result2." dia(s) vencidos"  }}
+                                    </td>
+                                    <td>
+                                        {{ ($result2 >= 0) ? 'Em vigência' : 'Vencido' }}
+                                    </td>
+                                    {{-- <td>
                                         <div class="font-weight-semibold">{{ $item->cpf }}</div>
                                     </td>
                                     <td>
@@ -94,7 +128,7 @@
                                     </td>
                                     <td>
                                         <div class="font-weight-semibold">{{ date('d/m/Y', strtotime($item->dataNascimento)) }}</div>
-                                    </td>
+                                    </td> --}}
                                     <td class="text-center">
                                         <div class="list-icons">
                                             <div class="list-icons-item dropdown">
@@ -114,7 +148,7 @@
                                 </tr>
                             @endforeach
                             <tr class="">
-                                <td colspan="6">
+                                <td colspan="7">
                                     @php
                                         if(request()->name){
                                             $url = '&name='.request()->name;

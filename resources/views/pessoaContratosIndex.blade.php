@@ -70,7 +70,7 @@
                         </thead>
                         <tbody>
                             <tr class="table-active table-border-double">
-                                <td>termo_portaria</td>
+                                <td>Termo/Portaria</td>
                                 <td>Data Nomeação</td>
                                 <td>Data Exoneração</td>
                                 <td class="text-right">
@@ -80,20 +80,26 @@
                             @foreach($data as $item)
                                 <tr>
                                     <td>
-                                        <div class="font-weight-semibold">{{ $item->termo_portaria }}</div>
+                                        <div class="font-weight-semibold">
+                                            {{ $item->termo_portaria }}
+                                        </div>
                                     </td>
                                     <td>
-                                        <div class="font-weight-semibold">{{ date('d/m/Y', strtotime($item->data_nomeacao)) }}</div>
+                                        <div class="font-weight-semibold">
+                                            {{ date('d/m/Y', strtotime($item->data_nomeacao)) }}
+                                        </div>
                                     </td>
                                     <td>
-                                        <div class="font-weight-semibold">{{ ($item->data_exoneracao) ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-' }}</div>
+                                        <div class="font-weight-semibold">
+                                            {{ ($item->data_exoneracao) ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-' }}
+                                        </div>
                                     </td>
                                     <td class="text-center">
                                         <div class="list-icons">
                                             <div class="list-icons-item dropdown">
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{ route('pessoas.edit', $item->id) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
+                                                    <a href="{{ route('contratos.edit', [$pessoa_id, $item->id]) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
                                                     <form method="POST" action="{{ route('contratos.destroy', [$pessoa_id, $item->id]) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')

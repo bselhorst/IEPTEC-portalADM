@@ -36,7 +36,7 @@
     </div>
 
     <div class="card-body">
-        <form class="form-validate-jquery" method="POST" action="{{ @$data ? route('contratos.update', $data->id) : route('contratos.store', $pessoa_id) }}">
+        <form class="form-validate-jquery" method="POST" action="{{ @$data ? route('contratos.update', [$pessoa_id, $data->id]) : route('contratos.store', $pessoa_id) }}">
             <input type='hidden' name="pessoa_id" value="{{ $pessoa_id }}" />
             @csrf
             @if (@$data)
@@ -68,7 +68,7 @@
                     <div class="col-lg-3"></div>
                     <label class="col-form-label col-lg-2">Salário</label>
                     <div class="col-lg-2">
-                        <input type="text" name="salario" id="salario" data-prefix="R$ " placeholder="R$ 0,00" data-thousands="." data-decimal="," class="form-control">
+                        <input type="text" name="salario" id="salario" data-prefix="R$ " placeholder="R$ 0,00" data-thousands="." data-decimal="," value="{{ (@$data->salario) ? 'R$ '.number_format($data->salario, 2, ',','.') : ''  }}" class="form-control">
                     </div>
                 </div>
                 <div class="form-group row">
