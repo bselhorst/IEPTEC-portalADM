@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Pessoas</span>
+<span class="font-weight-semibold">Calendário de Contratos</span>
 @endsection
 
 @section('page-title-buttons')
@@ -9,8 +9,8 @@
 @endsection
 
 @section('breadcrumb')
-<a href="tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="#" class="breadcrumb-item active"><i class="icon-users mr-2"></i> Pessoas</a>
+<a href="/" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+<a href="#" class="breadcrumb-item active"><i class="icon-watch2 mr-2"></i> Calendário de Contratos</a>
 @endsection
 
 @section('content')
@@ -63,22 +63,23 @@
                     <table class="table text-nowrap">
                         <thead>
                             <tr>
-                                <th colspan="5">Tabela de Pessoas</th>
+                                <th colspan="5">Tabela de Calendário de Contratos</th>
                                 <th class="text-center" style="width: 20px;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="table-active table-border-double">
                                 <td>Nome</td>
-                                {{-- <td>Data Nomeação</td>
-                                <td>Data de Exoneração</td>
+                                <td>Data Inicial</td>
+                                <td>Data Final</td>
+                                <td>Renovado?</td>
                                 <td>Duração</td>
                                 <td>Observação</td>
-                                <td>Status</td> --}}
-                                <td>CPF</td>
+                                <td align="center">Status</td>
+                                {{-- <td>CPF</td>
                                 <td>Celular</td>
                                 <td>Email</td>
-                                <td>Data de Nascimento</td>
+                                <td>Data de Nascimento</td> --}}
                                 <td class="text-right">
                                     <span class="badge bg-blue badge-pill">{{$data->total()}}</span>
                                 </td>
@@ -88,20 +89,25 @@
                                     <td>
                                         <div class="font-weight-semibold">{{ $item->nome }}</div>
                                     </td>
-                                    {{-- <td>
+                                    <td>
                                         <div class="font-weight-semibold">
                                             {{ ($item->data_nomeacao) ? date('d/m/Y', strtotime($item->data_nomeacao)) : 'SEM CONTRATO' }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="font-weight-semibold">
-                                            {{ $item->data_exoneracao ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-' }}
+                                            {{ ($item->renovacao=="SIM") ? date('d/m/Y', strtotime($item->data_renovacao)) : (($item->data_exoneracao) ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-') }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="font-weight-semibold">
+                                            {{ ($item->renovacao) ? $item->renovacao : 'NÃO' }}
                                         </div>
                                     </td>
                                     <td>
                                         @php
                                             $start_time = \Carbon\Carbon::parse($item->data_nomeacao);
-                                            $finish_time = \Carbon\Carbon::parse($item->data_exoneracao);
+                                            ($item->renovacao == "SIM") ? $finish_time = \Carbon\Carbon::parse($item->data_renovacao) : $finish_time = \Carbon\Carbon::parse($item->data_exoneracao);
                                             $result = $start_time->diffInDays($finish_time, false);
                                         @endphp
                                         {{ ($item->data_exoneracao)? $result." dias" : 'INDETERMINADO' }}
@@ -109,25 +115,14 @@
                                     <td>
                                         @php
                                             $date = \Carbon\Carbon::parse(date('Y-m-d'));
-                                            $duration = \Carbon\Carbon::parse($item->data_exoneracao);
+                                            ($item->renovacao == "SIM") ? $duration = \Carbon\Carbon::parse($item->data_renovacao) : $duration = \Carbon\Carbon::parse($item->data_exoneracao);
                                             $result2 = $date->diffInDays($duration, false);
                                         @endphp
-                                        {{ ($result2 >= 0 ) ? $result2." dias para o vencimento" : $result2." dia(s) vencidos"  }}
+                                        {{ ($item->data_exoneracao) ? ($result2 >= 0) ? $result2." dias para o vencimento" : $result2." dia(s) vencidos" : 'INDETERMINADO' }}
                                     </td>
-                                    <td>
-                                        {{ ($result2 >= 0) ? 'Em vigência' : 'Vencido' }}
-                                    </td> --}}
-                                    <td>
-                                        <div class="font-weight-semibold">{{ $item->cpf }}</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-weight-semibold">{{ $item->celular }}</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-weight-semibold">{{ $item->email }}</div>
-                                    </td>
-                                    <td>
-                                        <div class="font-weight-semibold">{{ date('d/m/Y', strtotime($item->dataNascimento)) }}</div>
+                                    <td align="center">
+                                        <span class="badge {{ ($result2 >= 0) ? 'badge-success' : 'badge-danger' }}">{{ ($result2 >= 0) ? 'Em vigência' : 'Vencido' }}</span>
+                                        {{-- <span class="badge badge-light badge-striped badge-striped-left {{ ($result2 >= 0) ? 'border-left-success' : 'border-left-danger' }}">{{ ($result2 >= 0) ? 'Em vigência' : 'Vencido' }}</span> --}}
                                     </td>
                                     <td class="text-center">
                                         <div class="list-icons">
@@ -136,6 +131,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a href="{{ route('pessoas.edit', $item->id) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
                                                     <a href="{{ route('contratos.index', $item->id) }}" class="dropdown-item"><i class="icon-file-text2"></i> Contratos</a>
+                                                    <button class="dropdown-item" onclick="modal({{ $item->contrato_id }})"><i class="icon-alarm-add"></i> Renovar Contrato</button>
                                                     <form method="POST" action="{{ route('pessoas.destroy', $item->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')
@@ -148,7 +144,7 @@
                                 </tr>
                             @endforeach
                             <tr class="">
-                                <td colspan="7">
+                                <td colspan="8">
                                     @php
                                         if(request()->name){
                                             $url = '&name='.request()->name;
@@ -178,4 +174,59 @@
             </div>
         </div>
     </div>
+    <script>
+        function modal(id){
+            $('#formRenovacaoContrato').attr('action', '/pessoas/'+id+'/renovacaoContrato');
+            $('#modal_renovacao_contrato').modal('show');
+            $('#modal_renovacao_contrato').on('hidden.bs.modal', function () {
+                document.getElementById('data_renovacao').value = '';
+            })
+        }
+        function submitModal(){
+            if(document.getElementById('data_renovacao').value == ""){
+                alert('Adicione a Data de Renovação');
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <!-- Horizontal form modal -->
+    <div id="modal_renovacao_contrato" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Renovação de Contrato </h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form id="formRenovacaoContrato" onsubmit="return submitModal()" method="POST" class="form-validate-jquery">
+                    @csrf
+                    @method('PATCH')
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <label class="col-form-label col-sm-4">Data da Renovação</label>
+                            <div class="col-sm-4">
+                                <input type="date" name="data_renovacao" id="data_renovacao" class="form-control" required>
+                            </div>
+                        </div>
+                        {{-- <div class="form-group row">
+                            <div class="col-sm-2"></div>
+                            <label class="col-form-label col-sm-4">Data Final da Renovação</label>
+                            <div class="col-sm-4">
+                                <input type="date" name="data_exoneracao" id="data_exoneracao" class="form-control" required>
+                            </div>
+                        </div> --}}
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal" style="align: left">fechar</button>
+                        <button type="submit" class="btn bg-primary">Cadastrar Renovação</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /horizontal form modal -->
 @endsection

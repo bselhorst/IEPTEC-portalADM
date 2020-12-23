@@ -16,5 +16,6 @@ class PessoaContratos extends Model
         'data_renovacao',
         'data_nomeacao',
         'data_exoneracao',
+        'status'
     ];
 }

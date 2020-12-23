@@ -90,9 +90,11 @@ Route::group(['prefix' => 'usuariosSA', 'middleware' => ['role:usuarios-sa']], f
 Route::group(['prefix' => 'pessoas', 'middleware' => ['role:pessoas']], function() {
     Route::post('/', ['uses' => 'PessoasController@store', 'as' => 'pessoas.store'])->middleware('permission:create-pessoas');
     Route::get('/', ['uses' => 'PessoasController@index', 'as' => 'pessoas.index']);
+    Route::get('/contratosGeral', ['uses' => 'PessoasController@indexContratosGeral', 'as' => 'pessoas.indexContratoGeral']);
     Route::get('/create', ['uses' => 'PessoasController@create', 'as' => 'pessoas.create'])->middleware('permission:create-pessoas');
     Route::delete('/{id}', ['uses' => 'PessoasController@destroy', 'as' => 'pessoas.destroy'])->middleware('permission:delete-pessoas');
     Route::patch('/{id}', ['uses' => 'PessoasController@update', 'as' => 'pessoas.update'])->middleware('permission:update-pessoas');
+    Route::patch('/{id}/renovacaoContrato', ['uses' => 'PessoasController@renovacao', 'as' => 'pessoas.renovacao'])->middleware('permission:update-pessoas');
     Route::get('/{id}/edit', ['uses' => 'PessoasController@edit', 'as' => 'pessoas.edit'])->middleware('permission:update-pessoas');
 });
 

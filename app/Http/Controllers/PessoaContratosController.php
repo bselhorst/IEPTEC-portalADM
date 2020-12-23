@@ -49,6 +49,7 @@ class PessoaContratosController extends Controller
         $validatedData['salario'] = str_replace("R$ ", "", $validatedData['salario']);
         $validatedData['salario'] = str_replace(".", "", $validatedData['salario']);
         $validatedData['salario'] = str_replace(",", ".", $validatedData['salario']);
+        $validatedData['status'] = 1;
         PessoaContratos::create($validatedData);
         return redirect('/'.$validatedData['pessoa_id'].'/contratos')->with('success', 'Registro adicionado com sucesso!');
     }

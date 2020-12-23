@@ -199,6 +199,7 @@
 							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
 								<li class="nav-item"><a href="{{ route('pessoas.create') }}" class="nav-link">Cadastrar</a></li>
 								<li class="nav-item"><a href="{{ route('pessoas.index') }}" class="nav-link">Listar</a></li>
+								<li class="nav-item"><a href="{{ route('pessoas.indexContratoGeral') }}" class="nav-link">Vencimento de Contratos</a></li>
 							</ul>
 						</li>
 						@endrole

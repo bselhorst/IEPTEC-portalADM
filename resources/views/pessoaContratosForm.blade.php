@@ -16,12 +16,26 @@
 @section('content')
 <script src="{{ asset('backend/assets/js/jquery.mask.js') }}" type="text/javascript"></script>
 <script src="{{ asset('backend/assets/js/jquery-maskmoney.js') }}" type="text/javascript"></script>
-    <script>
-        $(function() {
-            $('#salario').maskMoney();
-        })
-    </script>
+<script>
+    $(function() {
+        $('#salario').maskMoney();
+    })
+    function verificarData(){
+        $dt_nomeacao = document.getElementById('data_nomeacao').value;
+        $dt_exoneracao = document.getElementById('data_exoneracao').value;
 
+        if($dt_exoneracao == ""){
+            return true;
+        }
+        if($dt_exoneracao >= $dt_nomeacao){
+            return true;
+        }else{
+            alert("Data final não pode ser menor do que a data inicial");
+        }
+
+        return false;
+    }
+</script>
 <!-- Form validation -->
 <div class="card">
     <div class="card-header header-elements-inline">
@@ -36,7 +50,7 @@
     </div>
 
     <div class="card-body">
-        <form class="form-validate-jquery" method="POST" action="{{ @$data ? route('contratos.update', [$pessoa_id, $data->id]) : route('contratos.store', $pessoa_id) }}">
+        <form class="form-validate-jquery" method="POST" onsubmit="return verificarData()" action="{{ @$data ? route('contratos.update', [$pessoa_id, $data->id]) : route('contratos.store', $pessoa_id) }}">
             <input type='hidden' name="pessoa_id" value="{{ $pessoa_id }}" />
             @csrf
             @if (@$data)
@@ -75,14 +89,14 @@
                     <div class="col-lg-3"></div>
                     <label class="col-form-label col-lg-2">Data da Nomeação <span class="text-danger">*</span></label>
                     <div class="col-lg-2">
-                        <input type="date" name="data_nomeacao" class="form-control" placeholder="Complemento" value="{{ @$data->data_nomeacao }}" autocomplete="off" required>
+                        <input type="date" name="data_nomeacao" id="data_nomeacao" class="form-control" placeholder="Complemento" value="{{ @$data->data_nomeacao }}" autocomplete="off" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
                     <label class="col-form-label col-lg-2">Data da Exoneração</label>
                     <div class="col-lg-2">
-                        <input type="date" name="data_exoneracao" class="form-control" placeholder="Complemento" value="{{ @$data->data_exoneracao }}" autocomplete="off">
+                        <input type="date" name="data_exoneracao" id="data_exoneracao" class="form-control" placeholder="Complemento" value="{{ @$data->data_exoneracao }}" autocomplete="off">
                     </div>
                 </div>
             </fieldset>
