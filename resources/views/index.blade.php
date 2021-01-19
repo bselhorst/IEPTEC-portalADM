@@ -28,7 +28,7 @@
             </div>
         </div>
         @endrole
-        @role('pessoas')
+        @role('rh')
         <div class="col-xl-3 col-sm-6">
             <div class="card">
                 <div class="card-body" style="padding: 0">

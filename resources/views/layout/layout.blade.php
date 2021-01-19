@@ -181,10 +181,10 @@
                         {{-- Almoxarifado --}}
 
 						<!-- RH -->
-						@role(['chamados', 'auxiliar-tecnologia', 'usuarios-sa'])
+						@role(['rh'])
 						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Recursos Humanos</div> <i class="icon-menu" title="Forms"></i></li>
 						@endrole
-						@role('auxiliar-tecnologia')
+						@role('rh')
 						<li class="nav-item nav-item-submenu">
 							<a href="#" class="nav-link"><i class="icon-cog"></i> <span>Auxiliares</span></a>
 							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
@@ -193,7 +193,7 @@
 							</ul>
 						</li>
 						@endrole
-						@role('pessoas')
+						@role('rh')
 						<li class="nav-item nav-item-submenu">
 							<a href="#" class="nav-link"><i class="icon-users"></i> <span>Pessoas</span></a>
 							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">

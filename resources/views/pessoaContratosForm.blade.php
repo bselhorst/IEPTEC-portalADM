@@ -1,7 +1,7 @@
 @extends('layout/layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Pessoas</span> - Cadastrar
+<span class="font-weight-semibold">Contratos</span> - Cadastrar
 @endsection
 
 @section('page-title-buttons')
@@ -39,7 +39,7 @@
 <!-- Form validation -->
 <div class="card">
     <div class="card-header header-elements-inline">
-        <h5 class="card-title">{{ @$data ? 'Editar Cadastro' : 'Cadastrar Pessoa' }}</h5>
+        <h5 class="card-title">{{ @$data ? 'Editar Contrato' : 'Cadastrar Contrato' }}</h5>
         <div class="header-elements">
             <div class="list-icons">
                 <a class="list-icons-item" data-action="collapse"></a>
@@ -56,7 +56,19 @@
             @if (@$data)
                 @method('PATCH')
             @endif
-                <legend class="text-uppercase font-size-sm font-weight-bold">Endereço</legend>
+                <legend class="text-uppercase font-size-sm font-weight-bold">Dados do Contrato</legend>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Setor <span class="text-danger">*</span></label>
+                    <div class="col-lg-4">
+                        <select class="form-control select-search select2-hidden-accessible" name="setor_id" required>
+                            <option value="">Selecione um Setor</option>
+                            @foreach ($setores as $setor)
+                                <option value="{{ $setor->id }}" {{ ($setor->id == @$data->setor_id)? 'selected' : '' }}>{{ $setor->nome }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
                     <label class="col-form-label col-lg-2">Matrícula</label>
@@ -108,6 +120,6 @@
         </form>
     </div>
 </div>
-
 <!-- /form validation -->
+
 @endsection

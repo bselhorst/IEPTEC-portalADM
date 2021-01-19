@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Pessoas</span>
+<span class="font-weight-semibold">Contratos - {{ @$data_person['nome'] }}</span>
 @endsection
 
 @section('page-title-buttons')
@@ -100,6 +100,7 @@
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a href="{{ route('contratos.edit', [$pessoa_id, $item->id]) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
+                                                    <button class="dropdown-item" onclick="modal({{ $item->id }})"><i class="{{ ($item->status == 0)? 'icon-check text-success' : 'icon-close2 text-danger'}}"></i>{{ ($item->status == 1)? 'Desativar ' : 'Ativar ' }}Contrato</button>
                                                     <form method="POST" action="{{ route('contratos.destroy', [$pessoa_id, $item->id]) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')
@@ -138,6 +139,31 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function modal(id){
+            $('#formResetPassword').attr('action', '/usuarios/'+id+'/updatePassword');
+            $('#modal_reset_password').modal('show');
+        }
+    </script>
+
+    <!-- Horizontal form modal -->
+    <div id="modal_reset_password" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmação</h5>
+                    <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="bootbox-body">Deseja alterar o status do contrato?</div>
+                </div>
+                <div class="modal-footer">
+                    <button data-bb-handler="cancel" type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+                    <button data-bb-handler="confirm" type="button" class="btn btn-primary">Sim</button>
                 </div>
             </div>
         </div>

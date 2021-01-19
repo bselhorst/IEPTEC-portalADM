@@ -42,7 +42,7 @@
                     <i class="fab-icon-open icon-paragraph-justify3"></i>
                     <i class="fab-icon-close icon-cross2"></i>
                 </a>
-    
+
                 <ul class="fab-menu-inner">
                     @permission('create-users')
                     <li>
@@ -103,7 +103,7 @@
                                             $url = '&name='.request()->name;
                                         }else{
                                             $url='';
-                                        }   
+                                        }
                                     @endphp
                                     <ul class="pagination pagination-pager pagination-rounded justify-content-center">
                                         @if ($usuarios->previousPageUrl())

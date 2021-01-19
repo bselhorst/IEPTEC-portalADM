@@ -87,7 +87,7 @@ Route::group(['prefix' => 'usuariosSA', 'middleware' => ['role:usuarios-sa']], f
 });
 
 //PESSOAS
-Route::group(['prefix' => 'pessoas', 'middleware' => ['role:pessoas']], function() {
+Route::group(['prefix' => 'pessoas', 'middleware' => ['role:rh']], function() {
     Route::post('/', ['uses' => 'PessoasController@store', 'as' => 'pessoas.store'])->middleware('permission:create-pessoas');
     Route::get('/', ['uses' => 'PessoasController@index', 'as' => 'pessoas.index']);
     Route::get('/contratosGeral', ['uses' => 'PessoasController@indexContratosGeral', 'as' => 'pessoas.indexContratoGeral']);
@@ -99,7 +99,7 @@ Route::group(['prefix' => 'pessoas', 'middleware' => ['role:pessoas']], function
 });
 
 //PESSOAS CONTRATOS
-Route::group(['prefix' => '{pessoa_id}/contratos', 'middleware' => ['role:pessoas']], function() {
+Route::group(['prefix' => '{pessoa_id}/contratos', 'middleware' => ['role:rh']], function() {
     Route::post('/', ['uses' => 'PessoaContratosController@store', 'as' => 'contratos.store'])->middleware('permission:create-pessoas');
     Route::get('/', ['uses' => 'PessoaContratosController@index', 'as' => 'contratos.index']);
     Route::get('/create', ['uses' => 'PessoaContratosController@create', 'as' => 'contratos.create'])->middleware('permission:create-pessoas');
@@ -116,11 +116,11 @@ Route::group(['prefix' => 'auxcategorias', 'middleware' => ['role:auxiliar-tecno
     Route::delete('/{id}', ['uses' => 'AuxCategoriasController@destroy', 'as' => 'categorias.destroy'])->middleware('permission:delete-aux-tecnologia');
 });
 
-Route::group(['prefix' => 'auxfuncoes', 'middleware' => ['role:auxiliar-tecnologia']], function(){
-    Route::post('/', ['uses' => 'AuxFuncoesController@store', 'as' => 'funcoes.store'])->middleware('permission:create-aux-tecnologia');
+Route::group(['prefix' => 'auxfuncoes', 'middleware' => ['role:rh']], function(){
+    Route::post('/', ['uses' => 'AuxFuncoesController@store', 'as' => 'funcoes.store']);
     Route::get('/', ['uses' => 'AuxFuncoesController@index', 'as' => 'funcoes.index']);
-    Route::get('/create', ['uses' => 'AuxFuncoesController@create', 'as' => 'funcoes.create'])->middleware('permission:create-aux-tecnologia');
-    Route::delete('/{id}', ['uses' => 'AuxFuncoesController@destroy', 'as' => 'funcoes.destroy'])->middleware('permission:delete-aux-tecnologia');
+    Route::get('/create', ['uses' => 'AuxFuncoesController@create', 'as' => 'funcoes.create']);
+    Route::delete('/{id}', ['uses' => 'AuxFuncoesController@destroy', 'as' => 'funcoes.destroy']);
 });
 
 Route::group(['prefix' => 'auxmarcas', 'middleware' => ['role:auxiliar-tecnologia']], function(){
@@ -159,11 +159,11 @@ Route::group(['prefix' => 'auxtiposequipamentos', 'middleware' => ['role:auxilia
     Route::delete('/{id}', ['uses' => 'AuxTiposEquipamentosController@destroy', 'as' => 'tiposequipamentos.destroy'])->middleware('permission:delete-aux-tecnologia');
 });
 
-Route::group(['prefix' => 'setores', 'middleware' => ['role:auxiliar-tecnologia']], function(){
-    Route::post('/', ['uses' => 'AuxSetoresController@store', 'as' => 'setores.store'])->middleware('permission:create-aux-tecnologia');
+Route::group(['prefix' => 'setores', 'middleware' => ['role:rh']], function(){
+    Route::post('/', ['uses' => 'AuxSetoresController@store', 'as' => 'setores.store']);
     Route::get('/', ['uses' => 'AuxSetoresController@index', 'as'=> 'setores.index']);
-    Route::get('/create', ['uses' => 'AuxSetoresController@create', 'as' => 'setores.create'])->middleware('permission:create-aux-tecnologia');
-    Route::delete('/{id}', ['uses' => 'AuxSetoresController@destroy', 'as' => 'setores.destroy'])->middleware('permission:delete-aux-tecnologia');
+    Route::get('/create', ['uses' => 'AuxSetoresController@create', 'as' => 'setores.create']);
+    Route::delete('/{id}', ['uses' => 'AuxSetoresController@destroy', 'as' => 'setores.destroy']);
 });
 
 //GERAL
@@ -177,4 +177,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //INDEX ESPECÍFICO DE CADA SISTEMA
 Route::get('/tecnologia', 'HomeController@indexTecnologia')->name('tecnologia');
-Route::get('/RH', 'HomeController@indexRH')->name('rh');
+Route::get('/RH', 'HomeController@indexRH')->name('rh')->middleware('role:rh');

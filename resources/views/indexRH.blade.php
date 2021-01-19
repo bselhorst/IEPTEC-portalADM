@@ -8,7 +8,7 @@
             Módulos
         </h6>
     </div>
-    @role('pessoas')
+    @role('rh')
     <div class="row">
         <div class="col-xl-3 col-sm-6">
             <div class="card">
@@ -27,10 +27,10 @@
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
     @endrole
-    @role('pessoas')
+    @role('rh')
     <div class="mb-3 pt-2">
         <h6 class="mb-0 font-weight-semibold">
             Tabelas Auxiliares
@@ -72,8 +72,8 @@
                     </div>
                 </div>
             </div>
-        </div>        
-        @endrole        
+        </div>
+        @endrole
     </div>
     <!-- /grid -->
 
