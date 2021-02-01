@@ -105,6 +105,9 @@ class PessoaContratosController extends Controller
         $validatedData['salario'] = str_replace("R$ ", "", $validatedData['salario']);
         $validatedData['salario'] = str_replace(".", "", $validatedData['salario']);
         $validatedData['salario'] = str_replace(",", ".", $validatedData['salario']);
+        if(!$validatedData['salario']){
+            $validatedData['salario'] = 0;
+        }
         PessoaContratos::whereId($id)->update($validatedData);
         return redirect('/'.$validatedData['pessoa_id'].'/contratos')->with('success', 'Registro adicionado com sucesso!');
     }
@@ -119,5 +122,16 @@ class PessoaContratosController extends Controller
     {
         PessoaContratos::findOrFail($id)->delete();
         return redirect('/'.$pessoa_id.'/contratos')->with('success', 'Registro deletado com sucesso!');
+    }
+
+    public function updateContrato($pessoa_id, $id){
+        $item = PessoaContratos::findOrFail($id);
+        if ($item['status'] == 0){
+            $validatedData['status'] = 1;
+        }else{
+            $validatedData['status'] = 0;
+        }
+        PessoaContratos::whereId($id)->update($validatedData);
+        return redirect('/'.$pessoa_id.'/contratos')->with('success', 'Registro alterado com sucesso');
     }
 }

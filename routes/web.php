@@ -90,6 +90,8 @@ Route::group(['prefix' => 'usuariosSA', 'middleware' => ['role:usuarios-sa']], f
 Route::group(['prefix' => 'pessoas', 'middleware' => ['role:rh']], function() {
     Route::post('/', ['uses' => 'PessoasController@store', 'as' => 'pessoas.store'])->middleware('permission:create-pessoas');
     Route::get('/', ['uses' => 'PessoasController@index', 'as' => 'pessoas.index']);
+    Route::get('/search', ['uses' => 'PessoasController@search', 'as' => 'pessoas.search']);
+    Route::get('/contratosGeralSearch', ['uses' => 'PessoasController@indexContratosGeralSearch', 'as' => 'pessoas.indexContratoGeralSearch']);
     Route::get('/contratosGeral', ['uses' => 'PessoasController@indexContratosGeral', 'as' => 'pessoas.indexContratoGeral']);
     Route::get('/create', ['uses' => 'PessoasController@create', 'as' => 'pessoas.create'])->middleware('permission:create-pessoas');
     Route::delete('/{id}', ['uses' => 'PessoasController@destroy', 'as' => 'pessoas.destroy'])->middleware('permission:delete-pessoas');
@@ -105,6 +107,7 @@ Route::group(['prefix' => '{pessoa_id}/contratos', 'middleware' => ['role:rh']],
     Route::get('/create', ['uses' => 'PessoaContratosController@create', 'as' => 'contratos.create'])->middleware('permission:create-pessoas');
     Route::delete('/{id}', ['uses' => 'PessoaContratosController@destroy', 'as' => 'contratos.destroy'])->middleware('permission:delete-pessoas');
     Route::patch('/{id}', ['uses' => 'PessoaContratosController@update', 'as' => 'contratos.update'])->middleware('permission:update-pessoas');
+    Route::patch('/{id}/updateContrato', ['uses' => 'PessoaContratosController@updateContrato', 'as' => 'contratos.updateContrato'])->middleware('permission:update-pessoas');
     Route::get('/{id}/edit', ['uses' => 'PessoaContratosController@edit', 'as' => 'contratos.edit'])->middleware('permission:update-pessoas');
 });
 

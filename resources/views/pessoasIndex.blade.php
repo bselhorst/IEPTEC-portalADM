@@ -22,8 +22,9 @@
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Pesquisar</legend>
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-3">Nome Completo<span class="text-danger">*</span></label>
-                        <div class="col-lg-9">
+                        <div class="col-lg-3"></div>
+                        <label class="col-form-label col-lg-2">Nome Completo<span class="text-danger">*</span></label>
+                        <div class="col-lg-4">
                             <input type="text" name="name" class="form-control" placeholder="Nome Completo">
                         </div>
                     </div>
@@ -70,11 +71,6 @@
                         <tbody>
                             <tr class="table-active table-border-double">
                                 <td>Nome</td>
-                                {{-- <td>Data Nomeação</td>
-                                <td>Data de Exoneração</td>
-                                <td>Duração</td>
-                                <td>Observação</td>
-                                <td>Status</td> --}}
                                 <td>CPF</td>
                                 <td>Celular</td>
                                 <td>Email</td>
@@ -88,35 +84,7 @@
                                     <td>
                                         <div class="font-weight-semibold">{{ $item->nome }}</div>
                                     </td>
-                                    {{-- <td>
-                                        <div class="font-weight-semibold">
-                                            {{ ($item->data_nomeacao) ? date('d/m/Y', strtotime($item->data_nomeacao)) : 'SEM CONTRATO' }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="font-weight-semibold">
-                                            {{ $item->data_exoneracao ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-' }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @php
-                                            $start_time = \Carbon\Carbon::parse($item->data_nomeacao);
-                                            $finish_time = \Carbon\Carbon::parse($item->data_exoneracao);
-                                            $result = $start_time->diffInDays($finish_time, false);
-                                        @endphp
-                                        {{ ($item->data_exoneracao)? $result." dias" : 'INDETERMINADO' }}
-                                    </td>
-                                    <td>
-                                        @php
-                                            $date = \Carbon\Carbon::parse(date('Y-m-d'));
-                                            $duration = \Carbon\Carbon::parse($item->data_exoneracao);
-                                            $result2 = $date->diffInDays($duration, false);
-                                        @endphp
-                                        {{ ($result2 >= 0 ) ? $result2." dias para o vencimento" : $result2." dia(s) vencidos"  }}
-                                    </td>
-                                    <td>
-                                        {{ ($result2 >= 0) ? 'Em vigência' : 'Vencido' }}
-                                    </td> --}}
+
                                     <td>
                                         <div class="font-weight-semibold">{{ $item->cpf }}</div>
                                     </td>

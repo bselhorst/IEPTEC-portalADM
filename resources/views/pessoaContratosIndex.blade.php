@@ -17,6 +17,7 @@
 @section('content')
 
     <!-- Form validation -->
+    <!--
     <div class="card">
         <div class="card-body">
             <form class="form-validate-jquery" method="GET" action="/pessoas/search">
@@ -35,7 +36,7 @@
             </form>
         </div>
     </div>
-
+    -->
     <div class="row">
         <ul class="fab-menu fab-menu-fixed fab-menu-bottom-right" data-fab-toggle="click" data-fab-state="closed">
             <li>
@@ -73,6 +74,7 @@
                                 <td>Termo/Portaria</td>
                                 <td>Data Nomeação</td>
                                 <td>Data Exoneração</td>
+                                <td>Status</td>
                                 <td class="text-right">
                                     <span class="badge bg-blue badge-pill">{{$data->total()}}</span>
                                 </td>
@@ -94,13 +96,18 @@
                                             {{ ($item->data_exoneracao) ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-' }}
                                         </div>
                                     </td>
+                                    <td>
+                                        <div class="font-weight-semibold">
+                                            <span class="badge {{ ($item->status == 1) ? 'badge-success' : 'badge-danger' }}">{{ ($item->status == 1) ? 'ATIVO' : 'INATIVO' }}</span>
+                                        </div>
+                                    </td>
                                     <td class="text-center">
                                         <div class="list-icons">
                                             <div class="list-icons-item dropdown">
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a href="{{ route('contratos.edit', [$pessoa_id, $item->id]) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
-                                                    <button class="dropdown-item" onclick="modal({{ $item->id }})"><i class="{{ ($item->status == 0)? 'icon-check text-success' : 'icon-close2 text-danger'}}"></i>{{ ($item->status == 1)? 'Desativar ' : 'Ativar ' }}Contrato</button>
+                                                    <button class="dropdown-item" onclick="modal({{ $pessoa_id }},{{ $item->id }})"><i class="{{ ($item->status == 0)? 'icon-check text-success' : 'icon-close2 text-danger'}}"></i>{{ ($item->status == 1)? 'Desativar ' : 'Ativar ' }}Contrato</button>
                                                     <form method="POST" action="{{ route('contratos.destroy', [$pessoa_id, $item->id]) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')
@@ -144,8 +151,8 @@
         </div>
     </div>
     <script>
-        function modal(id){
-            $('#formResetPassword').attr('action', '/usuarios/'+id+'/updatePassword');
+        function modal(pessoa_id, id){
+            $('#formResetPassword').attr('action', '/'+pessoa_id+'/contratos/'+id+'/updateContrato');
             $('#modal_reset_password').modal('show');
         }
     </script>
@@ -154,17 +161,21 @@
     <div id="modal_reset_password" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirmação</h5>
-                    <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body">
-                    <div class="bootbox-body">Deseja alterar o status do contrato?</div>
-                </div>
-                <div class="modal-footer">
-                    <button data-bb-handler="cancel" type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                    <button data-bb-handler="confirm" type="button" class="btn btn-primary">Sim</button>
-                </div>
+                <form action="#" id="formResetPassword" method="POST" class="form-validate-jquery">
+                    @csrf
+                    @method('PATCH')
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação</h5>
+                        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="bootbox-body">Deseja alterar o status do contrato?</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-bb-handler="cancel" type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+                        <button data-bb-handler="confirm" type="submit" class="btn btn-primary">Sim</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

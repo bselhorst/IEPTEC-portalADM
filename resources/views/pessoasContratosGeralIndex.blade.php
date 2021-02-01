@@ -18,12 +18,13 @@
     <!-- Form validation -->
     <div class="card">
         <div class="card-body">
-            <form class="form-validate-jquery" method="GET" action="/pessoas/search">
+            <form class="form-validate-jquery" method="GET" action="/pessoas/contratosGeralSearch">
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Pesquisar</legend>
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-3">Nome Completo<span class="text-danger">*</span></label>
-                        <div class="col-lg-9">
+                        <div class="col-lg-3"></div>
+                        <label class="col-form-label col-lg-2">Nome Completo<span class="text-danger">*</span></label>
+                        <div class="col-lg-4">
                             <input type="text" name="name" class="form-control" placeholder="Nome Completo">
                         </div>
                     </div>

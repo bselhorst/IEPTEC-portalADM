@@ -164,4 +164,23 @@ class PessoasController extends Controller
         PessoaContratos::whereId($id)->update($item);
         return redirect('/pessoas/contratosGeral')->with('Success', 'Renovação realizada');
     }
+
+    public function search(Request $request){
+        $search = $request->get('name');
+        $data = DB::table('pessoas')->where('nome', 'like', '%'.$search.'%')->paginate(15);
+        return view('pessoasIndex', compact('data'));
+    }
+
+    public function indexContratosGeralSearch(Request $request){
+
+        $data = DB::table('pessoas')
+        ->select('pessoas.id', 'pessoas.nome', 'pessoa_contratos.data_nomeacao', 'pessoa_contratos.data_exoneracao', 'pessoa_contratos.id as contrato_id', 'pessoa_contratos.renovacao', 'pessoa_contratos.data_renovacao')
+        ->leftJoin('pessoa_contratos', 'pessoas.id', 'pessoa_contratos.pessoa_id')
+        ->where('nome', 'like', '%'.$request->get('name').'%')
+        ->orderBy('pessoas.nome')
+        ->orderBy('pessoa_contratos.id', 'DESC')
+        ->paginate(15);
+
+        return view('pessoasContratosGeralIndex', compact('data'));
+    }
 }
