@@ -86,6 +86,36 @@ Route::group(['prefix' => 'usuariosSA', 'middleware' => ['role:usuarios-sa']], f
     Route::get('/{id}/edit', ['uses' => 'UsuariosServidorArquivosController@edit', 'as' => 'usuariossa.edit'])->middleware('permission:update-usuariossa');
 });
 
+//PATRIMONIO
+//AUX_SITUACAO_BEM
+Route::group(['prefix' => 'auxsituacaobem', 'middleware' => ['role:patrimonio']], function(){
+    Route::post('/', ['uses' => 'AuxSituacaoBemController@store', 'as' => 'auxsituacaobem.store']);
+    Route::get('/', ['uses' => 'AuxSituacaoBemController@index', 'as' => 'auxsituacaobem.index']);
+    Route::delete('/{id}', ['uses' => 'AuxSituacaoBemController@destroy', 'as' => 'auxsituacaobem.destroy']);
+    Route::patch('/{id}', ['uses' => 'AuxSituacaoBemController@update', 'as' => 'auxsituacaobem.update']);
+    Route::get('/{id}/edit', ['uses' => 'AuxSituacaoBemController@edit', 'as' => 'auxsituacaobem.edit']);
+});
+//PATRIMONIO_BEM
+Route::group(['prefix' => 'patrimoniobens', 'middleware' => ['role:patrimonio']], function() {
+    Route::post('/', ['uses' => 'PatrimonioBemController@store', 'as' => 'patrimoniobens.store']);
+    Route::get('/', ['uses' => 'PatrimonioBemController@index', 'as' => 'patrimoniobens.index']);
+    Route::get('/search', ['uses' => 'PatrimonioBemController@search', 'as' => 'patrimoniobens.search']);
+    Route::get('/create', ['uses' => 'PatrimonioBemController@create', 'as' => 'patrimoniobens.create']);
+    Route::delete('/{id}', ['uses' => 'PatrimonioBemController@destroy', 'as' => 'patrimoniobens.destroy']);
+    Route::patch('/{id}', ['uses' => 'PatrimonioBemController@update', 'as' => 'patrimoniobens.update']);
+    Route::get('/{id}/edit', ['uses' => 'PatrimonioBemController@edit', 'as' => 'patrimoniobens.edit']);
+});
+//PATRIMONIO
+Route::group(['prefix' => 'patrimonios', 'middleware' => ['role:patrimonio']], function() {
+    Route::post('/', ['uses' => 'PatrimonioController@store', 'as' => 'patrimonio.store']);
+    Route::get('/', ['uses' => 'PatrimonioController@index', 'as' => 'patrimonio.index']);
+    Route::get('/search', ['uses' => 'PatrimonioController@search', 'as' => 'patrimonio.search']);
+    Route::get('/create', ['uses' => 'PatrimonioController@create', 'as' => 'patrimonio.create']);
+    Route::delete('/{id}', ['uses' => 'PatrimonioController@destroy', 'as' => 'patrimonio.destroy']);
+    Route::patch('/{id}', ['uses' => 'PatrimonioController@update', 'as' => 'patrimonio.update']);
+    Route::get('/{id}/edit', ['uses' => 'PatrimonioController@edit', 'as' => 'patrimonio.edit']);
+});
+
 //PESSOAS
 Route::group(['prefix' => 'pessoas', 'middleware' => ['role:rh']], function() {
     Route::post('/', ['uses' => 'PessoasController@store', 'as' => 'pessoas.store'])->middleware('permission:create-pessoas');

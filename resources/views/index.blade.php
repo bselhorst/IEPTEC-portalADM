@@ -28,6 +28,26 @@
             </div>
         </div>
         @endrole
+        @role('patrimonio')
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+                <div class="card-body" style="padding: 0">
+                    <div class="card-img-actions" align="center" style="padding: 20px">
+                        <a href="{{ route('patrimonio.index') }}" data-popup="lightbox">
+                            <i class="icon-barcode2 icon-4x"></i>
+                            <span class="card-img-actions-overlay card-img">
+                                <!--<i class="icon-plus3 icon-2x">Acessar</i>-->
+                                Acessar
+                            </span>
+                        </a>
+                        <br>
+                        <br>
+                        <h5 class="mb-0 font-weight-semibold">Patrimonio</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endrole
         @role('rh')
         <div class="col-xl-3 col-sm-6">
             <div class="card">

@@ -59,6 +59,18 @@
                 <legend class="text-uppercase font-size-sm font-weight-bold">Dados do Contrato</legend>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Tipo de Contrato <span class="text-danger">*</span></label>
+                    <div class="col-lg-4">
+                        <select class="form-control select-search select2-hidden-accessible" name="setor_id" required>
+                            <option value="">Selecione um Tipo de Contrato</option>
+                            @foreach ($tipo_contratos as $tipo_contrato)
+                                <option value="{{ $tipo_contrato->id }}" {{ ($tipo_contrato->id == @$data->tipo_contrato_id)? 'selected' : '' }}>{{ $tipo_contrato->tipo_contrato }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
                     <label class="col-form-label col-lg-2">Setor <span class="text-danger">*</span></label>
                     <div class="col-lg-4">
                         <select class="form-control select-search select2-hidden-accessible" name="setor_id" required>

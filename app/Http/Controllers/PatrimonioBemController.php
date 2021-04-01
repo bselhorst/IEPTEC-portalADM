@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\AuxTiposContratos;
+use App\PatrimonioBem;
+use Illuminate\Support\Facades\DB;
 
-class AuxTiposContratosController extends Controller
+class PatrimonioBemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class AuxTiposContratosController extends Controller
      */
     public function index()
     {
-        $datas = AuxTiposContratos::orderBy('tipo_contrato')->paginate(15);
-        return view('auxTiposContratos', compact('datas'));
+        $data = PatrimonioBem::orderBy('descricao')->paginate(20);
+        return view('patrimonioBemIndex', compact('data'));
     }
 
     /**
@@ -25,7 +26,7 @@ class AuxTiposContratosController extends Controller
      */
     public function create()
     {
-        //return view('auxTiposContratos');
+        return view('patrimonioBemForm');
     }
 
     /**
@@ -37,10 +38,14 @@ class AuxTiposContratosController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tipo_contrato' => 'required',
+            'descricao' => 'required',
+            'marca' => '',
+            'modelo' => '',
+            'cor' => '',
         ]);
-        $create = AuxTiposContratos::create($validatedData);
-        return redirect('/auxtiposcontratos')->with('success', 'Dados registrado com sucesso!');
+
+        PatrimonioBem::create($validatedData);
+        return redirect('/patrimoniobens')->with('success', 'Registro adicionado com sucesso!');
     }
 
     /**
@@ -62,7 +67,8 @@ class AuxTiposContratosController extends Controller
      */
     public function edit($id)
     {
-
+        $data = PatrimonioBem::findOrFail($id);
+        return view('patrimonioBemForm', compact('data'));
     }
 
     /**
@@ -74,7 +80,15 @@ class AuxTiposContratosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'descricao' => 'required',
+            'marca' => '',
+            'modelo' => '',
+            'cor' => '',
+        ]);
+
+        PatrimonioBem::findOrFail($id)->update($validatedData);
+        return redirect('/patrimoniobens')->with('success', 'Registro editado com sucesso');
     }
 
     /**
@@ -85,8 +99,13 @@ class AuxTiposContratosController extends Controller
      */
     public function destroy($id)
     {
-        $tipo_contrato = AuxTiposContratos::findOrFail($id);
-        $tipo_contrato->delete();
-        return redirect('/auxtiposcontratos')->with('success', 'Registro deletado');
+        PatrimonioBem::findOrFail($id)->delete();
+        return redirect('/patrimoniobens')->with('success', 'Registro deletado com sucesso');
+    }
+
+    public function search(Request $request){
+        $search = $request->get('descricao');
+        $data = DB::table('patrimonio_bems')->where('descricao', 'like', '%'.$search.'%')->paginate(15);
+        return view('patrimonioBemIndex', compact('data'));
     }
 }

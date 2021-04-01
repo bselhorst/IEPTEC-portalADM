@@ -180,6 +180,38 @@
                         @endrole
                         {{-- Almoxarifado --}}
 
+                        <!-- RH -->
+						@role(['patrimonio'])
+						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Patrimonio</div> <i class="icon-menu" title="Forms"></i></li>
+                        @endrole
+                        @role('patrimonio')
+						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-cog"></i> <span>Auxiliares</span></a>
+                            <ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+								<li class="nav-item"><a href="{{ route('auxsituacaobem.index') }}" class="nav-link">Situação do Bem</a></li>
+							</ul>
+						</li>
+                        @endrole
+                        @role('patrimonio')
+						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-bag"></i> <span>Bem Patrimonial</span></a>
+							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+								<li class="nav-item"><a href="{{ route('patrimoniobens.create') }}" class="nav-link">Cadastrar</a></li>
+								<li class="nav-item"><a href="{{ route('patrimoniobens.index') }}" class="nav-link">Listar</a></li>
+							</ul>
+						</li>
+						@endrole
+						@role('patrimonio')
+						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-barcode2"></i> <span>Patrimonio</span></a>
+							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+								<li class="nav-item"><a href="{{ route('patrimonio.create') }}" class="nav-link">Cadastrar</a></li>
+								<li class="nav-item"><a href="{{ route('patrimonio.index') }}" class="nav-link">Listar</a></li>
+							</ul>
+						</li>
+						@endrole
+						<!-- /rh -->
+
 						<!-- RH -->
 						@role(['rh'])
 						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Recursos Humanos</div> <i class="icon-menu" title="Forms"></i></li>

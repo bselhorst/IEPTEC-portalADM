@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\AuxTiposContratos;
+use Illuminate\Support\Facades\DB;
+use App\AuxSituacaoBem;
 
-class AuxTiposContratosController extends Controller
+class AuxSituacaoBemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class AuxTiposContratosController extends Controller
      */
     public function index()
     {
-        $datas = AuxTiposContratos::orderBy('tipo_contrato')->paginate(15);
-        return view('auxTiposContratos', compact('datas'));
+        $datas = AuxSituacaoBem::orderBy('descricao')->paginate(15);
+        return view('auxSituacaoBem', compact('datas'));
     }
 
     /**
@@ -25,7 +26,7 @@ class AuxTiposContratosController extends Controller
      */
     public function create()
     {
-        //return view('auxTiposContratos');
+        //
     }
 
     /**
@@ -37,10 +38,11 @@ class AuxTiposContratosController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'tipo_contrato' => 'required',
+            'descricao' => 'required',
         ]);
-        $create = AuxTiposContratos::create($validatedData);
-        return redirect('/auxtiposcontratos')->with('success', 'Dados registrado com sucesso!');
+
+        AuxSituacaoBem::create($validatedData);
+        return redirect('/auxsituacaobem')->with('success', 'Registro adicionado com sucesso!');
     }
 
     /**
@@ -62,7 +64,9 @@ class AuxTiposContratosController extends Controller
      */
     public function edit($id)
     {
-
+        $datas = AuxSituacaoBem::orderBy('descricao')->paginate(15);
+        $dataEdit = AuxSituacaoBem::findOrFail($id);
+        return view('auxSituacaoBem', compact('datas', 'dataEdit'));
     }
 
     /**
@@ -74,7 +78,12 @@ class AuxTiposContratosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'descricao' => 'required',
+        ]);
+
+        AuxSituacaoBem::findOrFail($id)->update($validatedData);
+        return redirect('/auxsituacaobem')->with('success', 'Registro editado com sucesso!');
     }
 
     /**
@@ -85,8 +94,7 @@ class AuxTiposContratosController extends Controller
      */
     public function destroy($id)
     {
-        $tipo_contrato = AuxTiposContratos::findOrFail($id);
-        $tipo_contrato->delete();
-        return redirect('/auxtiposcontratos')->with('success', 'Registro deletado');
+        AuxSituacaoBem::findOrFail($id)->delete();
+        return redirect('/auxsituacaobem')->with('success', 'Registro deletado com sucesso!');
     }
 }

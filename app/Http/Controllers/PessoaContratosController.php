@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Pessoas;
 use App\PessoaContratos;
 use App\AuxSetores;
+use App\AuxTiposContratos;
 use Illuminate\Support\Facades\DB;
 
 class PessoaContratosController extends Controller
@@ -30,7 +31,8 @@ class PessoaContratosController extends Controller
     public function create($pessoa_id)
     {
         $setores = DB::table('aux_setores')->orderBy('nome')->get();
-        return view('pessoaContratosForm', compact('pessoa_id', 'setores'));
+        $tipo_contratos = AuxTiposContratos::orderBy('tipo_contrato')->get();
+        return view('pessoaContratosForm', compact('pessoa_id', 'setores', 'tipo_contratos'));
     }
 
     /**
@@ -80,7 +82,8 @@ class PessoaContratosController extends Controller
     {
         $data = PessoaContratos::findOrFail($id);
         $setores = DB::table('aux_setores')->orderBy('nome')->get();
-        return view('pessoaContratosForm', compact('pessoa_id', 'data', 'setores'));
+        $tipo_contratos = AuxTiposContratos::orderBy('tipo_contrato')->get();
+        return view('pessoaContratosForm', compact('pessoa_id', 'data', 'setores', 'tipo_contratos'));
     }
 
     /**
