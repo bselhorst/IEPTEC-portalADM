@@ -15,6 +15,14 @@
 
 @section('content')
 
+    @if (\Session::has('success'))
+    <div class="alert alert-success bg-white alert-styled-left alert-arrow-left alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+        <h6 class="alert-heading font-weight-semibold mb-1">Sucesso</h6>
+        {!!\Session::get('success')!!}
+    </div>
+    @endif
+
     <!-- Form validation -->
     <div class="card">
         <div class="card-body">
@@ -102,6 +110,7 @@
                                             <div class="list-icons-item dropdown">
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="{{ route('pessoas.show', $item->id) }}" class="dropdown-item"><i class="icon-eye"></i> Visualizar</a>
                                                     <a href="{{ route('pessoas.edit', $item->id) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
                                                     <a href="{{ route('contratos.index', $item->id) }}" class="dropdown-item"><i class="icon-file-text2"></i> Contratos</a>
                                                     <form method="POST" action="{{ route('pessoas.destroy', $item->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">

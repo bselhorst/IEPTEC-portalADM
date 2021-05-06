@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Auxiliar Situação do Bem</span>
+<span class="font-weight-semibold">Empresas Terceirizadas</span>
 @endsection
 
 @section('page-title-buttons')
@@ -10,7 +10,7 @@
 
 @section('breadcrumb')
 <a href="tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="#" class="breadcrumb-item active"><i class="icon-file-text2 mr-2"></i>Aux Situacao Bem</a>
+<a href="#" class="breadcrumb-item active"><i class="icon-office mr-2"></i> Empresas Terceirizadaspedi</a>
 @endsection
 
 @section('content')
@@ -18,7 +18,7 @@
     <script src="{{ asset('backend/assets/js/jquery.mask.js') }}" type="text/javascript"></script>
     <div class="card">
         <div class="card-body">
-            <form class="form-validate-jquery" method="POST" action="{{ (@$dataEdit) ? route('tiposcontratos.update', $dataEdit->id) : route('tiposcontratos.store') }}">
+            <form class="form-validate-jquery" method="POST" action="{{ (@$dataEdit) ? route('auxempresasterceirizados.update', $dataEdit->id) : route('auxempresasterceirizados.store') }}">
                 @csrf
                 @if(isset($dataEdit))
                     @method('PATCH')
@@ -27,19 +27,33 @@
                     <legend class="text-uppercase font-size-sm font-weight-bold">{{ (@$dataEdit) ? 'Editar' : 'Cadastrar'}}</legend>
                     <div class="form-group row" style="justify-content: center">
                         @if(isset($dataEdit))
-                            <a href="/tiposcontratos" style="color: red">Você está editando registro, clique aqui para cancelar a edição</a>
+                            <a href="/auxEmpresasTerceirizados" style="color: red">Você está editando registro, clique aqui para cancelar a edição</a>
                         @endif
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-3"></div>
-                        <label class="col-form-label col-lg-1">Tipo de Contrato<span class="text-danger"></span></label>
+                        <label class="col-form-label col-lg-1">Nome<span class="text-danger"></span></label>
                         <div class="col-lg-4">
-                            <input type="text" name="tipo_contrato" class="form-control" placeholder="Ex: CEC" value="{{ (@$dataEdit) ? $dataEdit->descricao : ''}}">
+                            <input type="text" name="nome" class="form-control" placeholder="Ex: Empresa LTDA" value="{{ (@$dataEdit) ? $dataEdit->nome : ''}}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3"></div>
+                        <label class="col-form-label col-lg-1">Descrição<span class="text-danger"></span></label>
+                        <div class="col-lg-4">
+                            <input type="text" name="descricao" class="form-control" placeholder="Ex: Descrição da empresa" value="{{ (@$dataEdit) ? $dataEdit->descricao : ''}}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-3"></div>
+                        <label class="col-form-label col-lg-1">CNPJ<span class="text-danger"></span></label>
+                        <div class="col-lg-2">
+                            <input type="text" name="cnpj" id="cnpj" data-mask="00.000.000/0000-00" class="form-control" placeholder="00.000.000/0001-00" value="{{ (@$dataEdit) ? $dataEdit->cnpj : ''}}">
                         </div>
                     </div>
                 </fieldset>
                 <div class="d-flex justify-content-end align-items-center">
-                    <button type="submit" class="btn btn-primary ml-3">{{(@$dataEdit) ? 'Editar' : 'Cadastrar' }}<i class=" {{ (@$dataEdit) ? 'icon-pencil' : 'icon-add' }} ml-2"></i></button>
+                    <button type="submit" class="btn btn-primary ml-3">{{(@$dataEdit) ? 'Editar' : 'Cadastrar' }}<i class="{{(@$dataEdit) ? 'icon-pencil7' : 'icon-add' }} ml-2"></i></button>
                 </div>
             </form>
         </div>
@@ -73,32 +87,45 @@
                     <table class="table text-nowrap">
                         <thead>
                             <tr>
-                                <th>Tabela de Situações</th>
+                                <th>Tabela de Fornecedores</th>
                                 <th class="text-center" style="width: 20px;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="table-active table-border-double">
+                                <td>Nome</td>
                                 <td>Descrição</td>
+                                <td>CNPJ</td>
                                 <td class="text-right">
-                                    <span class="badge bg-blue badge-pill">{{$datas->total()}}</span>
+                                    <span class="badge bg-blue badge-pill">{{$data->total()}}</span>
                                 </td>
                             </tr>
-                            @foreach($datas as $data)
+                            @foreach($data as $item)
                                 <tr>
                                     <td>
-                                        <div class="font-weight-semibold">{{ $data->tipo_contrato }}</div>
+                                        <div class="font-weight-semibold">{{ $item->nome }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="font-weight-semibold">{{ $item->descricao }}</div>
+                                    </td>
+                                    <td>
+                                        <div class="font-weight-semibold">{{ $item->cnpj }}</div>
+                                    </td>
                                     </td>
                                     <td class="text-right">
                                         <div class="list-icons">
                                             <div class="list-icons-item dropdown">
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <form method="POST" action="{{ route('tiposcontratos.destroy', $data->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
+
+                                                    <a href="{{ route('auxempresasterceirizados.edit', $item->id) }}" class="dropdown-item"><i class="icon-pencil7"></i> Editar</a>
+
+                                                    {{-- <form method="POST" action="{{ route('auxempresasterceirizados.destroy', $data->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="dropdown-item"><i class="icon-cross2 text-danger"></i> Deletar</button>
-                                                    </form>
+                                                    </form> --}}
+
                                                 </div>
                                             </div>
                                         </div>
@@ -113,17 +140,17 @@
                                         //request()->data? $url.='&patrimonio='.request()->descricao : '';
                                     @endphp
                                     <ul class="pagination pagination-pager pagination-rounded justify-content-center">
-                                        @if ($datas->previousPageUrl())
-                                    <li class="page-item"><a href="{{ $datas->previousPageUrl() }}{{ $url }}" class="page-link">← &nbsp; Anterior</a></li>
+                                        @if ($data->previousPageUrl())
+                                    <li class="page-item"><a href="{{ $data->previousPageUrl() }}{{ $url }}" class="page-link">← &nbsp; Anterior</a></li>
                                         @endif
-                                        @if (!$datas->previousPageUrl())
-                                            <li class="page-item disabled"><a href="{{ $datas->previousPageUrl() }}" class="page-link">← &nbsp; Anterior</a></li>
+                                        @if (!$data->previousPageUrl())
+                                            <li class="page-item disabled"><a href="{{ $data->previousPageUrl() }}" class="page-link">← &nbsp; Anterior</a></li>
                                         @endif
-                                        @if ($datas->nextPageUrl())
-                                            <li class="page-item"><a href="{{ $datas->nextPageUrl() }}{{ $url }}" class="page-link">Próximo &nbsp; →</a></li>
+                                        @if ($data->nextPageUrl())
+                                            <li class="page-item"><a href="{{ $data->nextPageUrl() }}{{ $url }}" class="page-link">Próximo &nbsp; →</a></li>
                                         @endif
-                                        @if (!$datas->nextPageUrl())
-                                            <li class="page-item disabled"><a href="{{ $datas->nextPageUrl() }}" class="page-link">Próximo &nbsp; →</a></li>
+                                        @if (!$data->nextPageUrl())
+                                            <li class="page-item disabled"><a href="{{ $data->nextPageUrl() }}" class="page-link">Próximo &nbsp; →</a></li>
                                         @endif
                                     </ul>
                                 </td>

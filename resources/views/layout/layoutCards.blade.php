@@ -64,7 +64,7 @@
 						<span class="d-md-none ml-2">Messages</span>
 						<span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">2</span>
 					</a>
-					
+
 					<div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
 						<div class="dropdown-content-header">
 							<span class="font-weight-semibold">Messages</span>
@@ -123,7 +123,7 @@
 					</a>
 
 					<div class="dropdown-menu dropdown-menu-right">
-						<a href="#" class="dropdown-item"><i class="icon-cog5"></i> Configurações</a>
+						<a href="#" onclick="modal({{ Auth::user()->id }})" class="dropdown-item"><i class="icon-lock"></i> Altera Senha</a>
 						<div class="dropdown-divider"></div>
 						<a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();" style="color: #E57373"><i class="icon-switch2"></i> Logout</a>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -140,7 +140,7 @@
 	<!-- Page content -->
 	<div class="page-content">
 
-		
+
         	<!-- Main content -->
 	<div class="content-wrapper">
 
@@ -148,12 +148,12 @@
     <div class="page-header page-header-light">
 
         <!-- /page header -->
-       
+
         <!-- Content area -->
         <div class="content">
-        
+
         @yield('content')
-        
+
         </div>
         <!-- /content area -->
 
@@ -168,7 +168,7 @@
 
             <div class="navbar-collapse collapse" id="navbar-footer">
                 <span class="navbar-text">
-                    &copy; 2020. IEPTEC - Instituto Estadual de Educação Profissional e Tecnológico
+                    &copy; 2020 - {{ date("Y") }}. IEPTEC - Instituto Estadual de Educação Profissional e Tecnológico
                 </span>
             </div>
         </div>
@@ -182,3 +182,41 @@
 
 </body>
 </html>
+
+<script>
+    function modal(id){
+        $('#formResetPassword').attr('action', '/usuarios/'+id+'/updatePassword');
+        $('#modal_reset_password').modal('show');
+    }
+</script>
+
+<!-- Horizontal form modal -->
+<div id="modal_reset_password" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Formulário de Redefinição de Senha </h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <form action="{{ route('usuarios.updatePassword', 0) }}" id="formResetPassword" method="POST" class="form-validate-jquery">
+                @csrf
+                @method('PATCH')
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-3">Password</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="password" id="password" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link" data-dismiss="modal" style="align: left">fechar</button>
+                    <button type="submit" class="btn bg-primary">Redefinir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /horizontal form modal -->

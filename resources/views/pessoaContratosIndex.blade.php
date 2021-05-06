@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Contratos - {{ @$data_person['nome'] }}</span>
+<span class="font-weight-semibold">Contratos - {{ @$data_person['nome'] }} <a href="{{ route("pessoas.show", $data_person['id']) }}"><i class="icon-eye"></i></a></span>
 @endsection
 
 @section('page-title-buttons')
@@ -15,6 +15,14 @@
 @endsection
 
 @section('content')
+
+    @if (\Session::has('success'))
+        <div class="alert alert-success bg-white alert-styled-left alert-arrow-left alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+            <h6 class="alert-heading font-weight-semibold mb-1">Sucesso</h6>
+            {!!\Session::get('success')!!}
+        </div>
+    @endif
 
     <!-- Form validation -->
     <!--
@@ -73,6 +81,8 @@
                             <tr class="table-active table-border-double">
                                 <td>Termo/Portaria</td>
                                 <td>Data Nomeação</td>
+                                <td>Renovado?</td>
+                                <td>Data da Renovação</td>
                                 <td>Data Exoneração</td>
                                 <td>Status</td>
                                 <td class="text-right">
@@ -93,7 +103,19 @@
                                     </td>
                                     <td>
                                         <div class="font-weight-semibold">
-                                            {{ ($item->data_exoneracao) ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-' }}
+                                            {{  ($item->renovacao == 'SIM') ? $item->renovacao : 'NÃO' }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="font-weight-semibold">
+                                            {{ ($item->data_renovacao) ? date('d/m/Y', strtotime($item->data_renovacao)) : '-' }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="font-weight-semibold">
+                                            {{
+                                                ($item->data_nova_exoneracao) ? date('d/m/Y', strtotime($item->data_nova_exoneracao)) : (($item->data_exoneracao) ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-')
+                                            }}
                                         </div>
                                     </td>
                                     <td>
@@ -107,6 +129,7 @@
                                                 <a href="#" class="list-icons-item dropdown-toggle caret-0" data-toggle="dropdown"><i class="icon-menu7"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a href="{{ route('contratos.edit', [$pessoa_id, $item->id]) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
+                                                    <button class="dropdown-item" onclick="modalRenovarContrato({{ $pessoa_id }},{{ $item->id }})"><i class="icon-alarm-add text-success"></i>Renovar Contrato</button>
                                                     <button class="dropdown-item" onclick="modal({{ $pessoa_id }},{{ $item->id }})"><i class="{{ ($item->status == 0)? 'icon-check text-success' : 'icon-close2 text-danger'}}"></i>{{ ($item->status == 1)? 'Desativar ' : 'Ativar ' }}Contrato</button>
                                                     <form method="POST" action="{{ route('contratos.destroy', [$pessoa_id, $item->id]) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
@@ -120,7 +143,7 @@
                                 </tr>
                             @endforeach
                             <tr class="">
-                                <td colspan="5">
+                                <td colspan="7">
                                     @php
                                         if(request()->name){
                                             $url = '&name='.request()->name;
@@ -152,16 +175,35 @@
     </div>
     <script>
         function modal(pessoa_id, id){
-            $('#formResetPassword').attr('action', '/'+pessoa_id+'/contratos/'+id+'/updateContrato');
-            $('#modal_reset_password').modal('show');
+            $('#formStatusContrato').attr('action', 'contratos/'+id+'/updateContrato');
+            $('#modalStatusContrato').modal('show');
+        }
+
+        function modalRenovarContrato(pessoa_id, id){
+            // document.getElementById('pessoa_id').value = pessoa_id;
+            document.getElementById('data_renovacao').value = null;
+            document.getElementById('data_final').value = null;
+            document.getElementById("btnConfirmaRenovacao").disabled = true;
+            $('#formRenovarContrato').attr('action', 'contratos/'+id+'/renovarContrato');
+            $('#modalRenovarContrato').modal('show');
+        }
+
+        function activeButton(){
+            data_renovacao = document.getElementById('data_renovacao').value;
+            data_final = document.getElementById('data_final').value;
+            if(data_renovacao && data_final){
+                document.getElementById("btnConfirmaRenovacao").disabled = false;
+            }else{
+                document.getElementById("btnConfirmaRenovacao").disabled = true;
+            }
         }
     </script>
 
     <!-- Horizontal form modal -->
-    <div id="modal_reset_password" class="modal fade" tabindex="-1">
+    <div id="modalStatusContrato" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <form action="#" id="formResetPassword" method="POST" class="form-validate-jquery">
+                <form action="#" id="formStatusContrato" method="POST" class="form-validate-jquery">
                     @csrf
                     @method('PATCH')
                     <div class="modal-header">
@@ -174,6 +216,34 @@
                     <div class="modal-footer">
                         <button data-bb-handler="cancel" type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
                         <button data-bb-handler="confirm" type="submit" class="btn btn-primary">Sim</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Horizontal form modal -->
+    <div id="modalRenovarContrato" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form action="" id="formRenovarContrato" method="POST" class="form-validate-jquery">
+                    {{-- <input type="hidden" name="pessoa_id" /> --}}
+                    @csrf
+                    @method('PATCH')
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação de Renovação</h5>
+                        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="bootbox-body">Data de renovação</div>
+                        <input type="date" name="data_renovacao" id="data_renovacao" onchange="activeButton()" class="form-control" autocomplete="off" value="" required>
+                        <br>
+                        <div class="bootbox-body">Nova data final</div>
+                        <input type="date" name="data_nova_exoneracao" id="data_final" onchange="activeButton()" class="form-control" autocomplete="off" value="" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-bb-handler="cancel" type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+                        <button data-bb-handler="confirm" type="submit" id="btnConfirmaRenovacao" class="btn btn-primary">Sim</button>
                     </div>
                 </form>
             </div>

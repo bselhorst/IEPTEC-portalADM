@@ -61,14 +61,14 @@
                 <legend class="text-uppercase font-size-sm font-weight-bold">Documentos</legend>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">RG <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">RG</label>
                     <div class="col-lg-4">
                         <input type="text" name="rg" class="form-control" placeholder="" autocomplete="off" value="{{ @$data->rg }}">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Órgão Exp. <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Órgão Exp.</span></label>
                     <div class="col-lg-4">
                         <input type="text" name="orgaoExp" class="form-control" placeholder="" autocomplete="off" value="{{ @$data->orgaoExp }}">
                     </div>
@@ -77,7 +77,7 @@
                     <div class="col-lg-3"></div>
                     <label class="col-form-label col-lg-2">CPF <span class="text-danger">*</span></label>
                     <div class="col-lg-2">
-                        <input type="text" name="cpf" class="form-control" data-mask="000.000.000-00" placeholder="___.___.___-__" autocomplete="off" value="{{ @$data->cpf }}">
+                        <input type="text" name="cpf" class="form-control" data-mask="000.000.000-00" placeholder="___.___.___-__" autocomplete="off" value="{{ @$data->cpf }}" required>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -96,48 +96,48 @@
                     <div class="col-lg-3"></div>
                     <label class="col-form-label col-lg-2">Data de Nascimento <span class="text-danger">*</span></label>
                     <div class="col-lg-2">
-                        <input type="date" name="dataNascimento" class="form-control" value="{{ @$data->dataNascimento }}" autocomplete="off">
+                        <input type="date" name="dataNascimento" class="form-control" value="{{ @$data->dataNascimento }}" autocomplete="off" required>
                     </div>
                 </div>
                 <legend class="text-uppercase font-size-sm font-weight-bold">Endereço</legend>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Rua <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Rua</label>
                     <div class="col-lg-4">
                         <input type="text" name="rua" class="form-control" placeholder="Rua" value="{{ @$data->rua }}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Número <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Número</label>
                     <div class="col-lg-1">
                         <input type="text" name="numero" class="form-control" data-mask="00000" placeholder="" value="{{ @$data->numero }}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Bairro <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Bairro</label>
                     <div class="col-lg-4">
                         <input type="text" name="bairro" class="form-control" placeholder="Bairro" value="{{ @$data->bairro }}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Municipio <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Municipio</label>
                     <div class="col-lg-4">
                         <input type="text" name="municipio" class="form-control" placeholder="Municipio" value="{{ @$data->municipio }}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Complemento <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Complemento</label>
                     <div class="col-lg-4">
                         <input type="text" name="complemento" class="form-control" placeholder="Complemento" value="{{ @$data->complemento }}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Cep <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Cep</label>
                     <div class="col-lg-2">
                         <input type="text" name="cep" class="form-control" data-mask="00000-000" placeholder="_____-___" value="{{ @$data->cep }}" autocomplete="off">
                     </div>
@@ -145,35 +145,35 @@
                 <legend class="text-uppercase font-size-sm font-weight-bold">Dados de Contato</legend>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Telefone <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Telefone</label>
                     <div class="col-lg-2">
                         <input type="text" name="telefone" class="form-control" data-mask="(00)000000000" placeholder="(__)_________" value="{{ @$data->telefone }}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Celular <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Celular</label>
                     <div class="col-lg-2">
                         <input type="text" name="celular" class="form-control" data-mask="(00)000000000" placeholder="(__)_________" value="{{ @$data->celular }}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Email <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Email</label>
                     <div class="col-lg-4">
                         <input type="text" name="email" class="form-control" placeholder="Email" value="{{ @$data->email }}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Nome do contato de emergência <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Nome do contato de emergência</label>
                     <div class="col-lg-4">
                         <input type="text" name="nomeDeEmergencia" class="form-control" placeholder="Nome" value="{{ @$data->nomeDeEmergencia }}" autocomplete="off">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-3"></div>
-                    <label class="col-form-label col-lg-2">Contato de Emergência <span class="text-danger">*</span></label>
+                    <label class="col-form-label col-lg-2">Contato de Emergência</label>
                     <div class="col-lg-2">
                         <input type="text" name="numeroEmergencia" class="form-control" data-mask="(00)000000000" data-mask-clearifnotmatch="true" value="{{ @$data->numeroEmergencia }}" placeholder="(__)_________" autocomplete="off">
                     </div>

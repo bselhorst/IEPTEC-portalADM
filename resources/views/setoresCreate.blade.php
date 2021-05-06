@@ -9,7 +9,7 @@
 
 @section('breadcrumb')
 <a href="../tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="{{ route('setores.index') }}" class="breadcrumb-item"><i class="icon-office mr-2"></i> Setores</a>
+<a href="{{ route('setores.index') }}" class="breadcrumb-item"><i class="icon-library2 mr-2"></i> Setores</a>
 <span class="breadcrumb-item active">Cadastrar</span>
 @endsection
 

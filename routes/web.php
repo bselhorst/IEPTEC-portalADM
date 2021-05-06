@@ -15,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+//AUX_EMPRESAS_TERCEIRIZADOS
+Route::group(['prefix' => 'auxEmpresasTerceirizados', 'middleware' => ['role:rh']], function(){
+    Route::post('/', ['uses' => 'AuxEmpresasTerceirizadosController@store', 'as' => 'auxempresasterceirizados.store']);
+    Route::get('/', ['uses' => 'AuxEmpresasTerceirizadosController@index', 'as' => 'auxempresasterceirizados.index']);
+    Route::delete('/{id}', ['uses' => 'AuxEmpresasTerceirizadosController@destroy', 'as' => 'auxempresasterceirizados.destroy']);
+    Route::patch('/{id}', ['uses' => 'AuxEmpresasTerceirizadosController@update', 'as' => 'auxempresasterceirizados.update']);
+    Route::get('/{id}/edit', ['uses' => 'AuxEmpresasTerceirizadosController@edit', 'as' => 'auxempresasterceirizados.edit']);
+});
+
 //AUX_UNIDADES
 Route::group(['prefix' => 'auxunidades', 'middleware' => ['role:almoxarifado']], function(){
     Route::post('/', ['uses' => 'AuxUnidadesController@store', 'as' => 'auxunidades.store']);
@@ -72,7 +81,11 @@ Route::group(['prefix' => 'usuarios', 'middleware' => ['role:usuarios']], functi
     Route::get('/', ['uses' => 'UsuariosController@index', 'as' => 'usuarios.index']);
     Route::get('/search', ['uses' => 'UsuariosController@search', 'as' => 'usuarios.search']);
     Route::get('/create', ['uses' => 'UsuariosController@create', 'as' => 'usuarios.create'])->middleware('permission:create-users');
-    Route::patch('/{id}/updatePassword', ['uses' => 'UsuariosController@updatePassword', 'as' => 'usuarios.updatePassword'])->middleware('permission:update-users');
+    //Route::patch('/{id}/updatePassword', ['uses' => 'UsuariosController@updatePassword', 'as' => 'usuarios.updatePassword'])->middleware('permission:update-users');
+});
+
+Route::group(['prefix' => 'usuarios'], function() {
+    Route::patch('/{id}/updatePassword', ['uses' => 'UsuariosController@updatePassword', 'as' => 'usuarios.updatePassword']);
 });
 
 //USUÁRIOS SERVIDOR DE ARQUIVO
@@ -124,6 +137,7 @@ Route::group(['prefix' => 'pessoas', 'middleware' => ['role:rh']], function() {
     Route::get('/contratosGeralSearch', ['uses' => 'PessoasController@indexContratosGeralSearch', 'as' => 'pessoas.indexContratoGeralSearch']);
     Route::get('/contratosGeral', ['uses' => 'PessoasController@indexContratosGeral', 'as' => 'pessoas.indexContratoGeral']);
     Route::get('/create', ['uses' => 'PessoasController@create', 'as' => 'pessoas.create'])->middleware('permission:create-pessoas');
+    Route::get('/{id}/view', ['uses' => 'PessoasController@show', 'as' => 'pessoas.show']);
     Route::delete('/{id}', ['uses' => 'PessoasController@destroy', 'as' => 'pessoas.destroy'])->middleware('permission:delete-pessoas');
     Route::patch('/{id}', ['uses' => 'PessoasController@update', 'as' => 'pessoas.update'])->middleware('permission:update-pessoas');
     Route::patch('/{id}/renovacaoContrato', ['uses' => 'PessoasController@renovacao', 'as' => 'pessoas.renovacao'])->middleware('permission:update-pessoas');
@@ -131,13 +145,16 @@ Route::group(['prefix' => 'pessoas', 'middleware' => ['role:rh']], function() {
 });
 
 //PESSOAS CONTRATOS
-Route::group(['prefix' => '{pessoa_id}/contratos', 'middleware' => ['role:rh']], function() {
+Route::group(['prefix' => 'pessoas/{pessoa_id}/contratos', 'middleware' => ['role:rh']], function() {
     Route::post('/', ['uses' => 'PessoaContratosController@store', 'as' => 'contratos.store'])->middleware('permission:create-pessoas');
     Route::get('/', ['uses' => 'PessoaContratosController@index', 'as' => 'contratos.index']);
     Route::get('/create', ['uses' => 'PessoaContratosController@create', 'as' => 'contratos.create'])->middleware('permission:create-pessoas');
     Route::delete('/{id}', ['uses' => 'PessoaContratosController@destroy', 'as' => 'contratos.destroy'])->middleware('permission:delete-pessoas');
+    Route::delete('/{id}/view/contractDestroy', ['uses' => 'PessoaContratosController@showdestroy', 'as' => 'contratos.showdestroy'])->middleware('permission:delete-pessoas');
     Route::patch('/{id}', ['uses' => 'PessoaContratosController@update', 'as' => 'contratos.update'])->middleware('permission:update-pessoas');
     Route::patch('/{id}/updateContrato', ['uses' => 'PessoaContratosController@updateContrato', 'as' => 'contratos.updateContrato'])->middleware('permission:update-pessoas');
+    Route::patch('/{id}/renovarContrato', ['uses' => 'PessoaContratosController@renovarContrato', 'as' => 'contratos.renovarContrato'])->middleware('permission:update-pessoas');
+    Route::patch('/{id}/updateContratoShow', ['uses' => 'PessoaContratosController@updateContratoShow', 'as' => 'contratos.updateContratoShow'])->middleware('permission:update-pessoas');
     Route::get('/{id}/edit', ['uses' => 'PessoaContratosController@edit', 'as' => 'contratos.edit'])->middleware('permission:update-pessoas');
 });
 
@@ -178,7 +195,7 @@ Route::group(['prefix' => 'tecnicos', 'middleware' => ['role:auxiliar-tecnologia
     Route::delete('/{id}', ['uses' => 'TecnicosController@destroy', 'as' => 'tecnicos.destroy'])->middleware('permission:delete-aux-tecnologia');
 });
 
-Route::group(['prefix' => 'auxtiposcontratos', 'middleware' => ['role:auxiliar-tecnologia']], function(){
+Route::group(['prefix' => 'auxtiposcontratos', 'middleware' => ['role:rh']], function(){
     Route::post('/', ['uses' => 'AuxTiposContratosController@store', 'as' => 'tiposcontratos.store'])->middleware('permission:create-aux-tecnologia');
     Route::get('/', ['uses' => 'AuxTiposContratosController@index', 'as' => 'tiposcontratos.index']);
     Route::get('/create', ['uses' => 'AuxTiposContratosController@create', 'as' => 'tiposcontratos.create'])->middleware('permission:create-aux-tecnologia');

@@ -61,7 +61,7 @@ class UsuariosServidorArquivosController extends Controller
             UsaPermission::create($vd);
         }
 
-        return redirect('/usuariosSA')->with('success', 'Usuário criado com sucesso!');
+        return redirect('/usuariosSA')->with('success', 'Registro criado com sucesso!');
     }
 
     /**
@@ -129,7 +129,7 @@ class UsuariosServidorArquivosController extends Controller
     {
         $usuario = UsuariosServidorArquivos::findOrFail($id);
         $usuario->delete();
-        return redirect('/usuariosSA')->with('success', 'Registro Excluído com sucesso!');
+        return redirect('/usuariosSA')->with('success', 'Registro excluído com sucesso!');
     }
 
     public function search(Request $request){

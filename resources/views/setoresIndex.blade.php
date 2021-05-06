@@ -10,7 +10,7 @@
 
 @section('breadcrumb')
 <a href="tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="{{ route('setores.index') }}" class="breadcrumb-item active"><i class="icon-office mr-2"></i> Setores</a>
+<a href="{{ route('setores.index') }}" class="breadcrumb-item active"><i class="icon-library2 mr-2"></i> Setores</a>
 @endsection
 
 @section('content')
@@ -21,7 +21,7 @@
                     <i class="fab-icon-open icon-paragraph-justify3"></i>
                     <i class="fab-icon-close icon-cross2"></i>
                 </a>
-    
+
                 <ul class="fab-menu-inner">
                     @permission('create-aux-tecnologia')
                     <li>

@@ -41,6 +41,24 @@
             <div class="card">
                 <div class="card-body" style="padding: 0">
                     <div class="card-img-actions" align="center" style="padding: 20px">
+                        <a href="{{ route('auxempresasterceirizados.index') }}" data-popup="lightbox">
+                            <i class="icon-office icon-4x"></i>
+                            <span class="card-img-actions-overlay card-img">
+                                <!--<i class="icon-plus3 icon-2x">Acessar</i>-->
+                                Acessar
+                            </span>
+                        </a>
+                        <br>
+                        <br>
+                        <h5 class="mb-0 font-weight-semibold">Empresas Terceirizadas</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+                <div class="card-body" style="padding: 0">
+                    <div class="card-img-actions" align="center" style="padding: 20px">
                         <a href="{{ route('funcoes.index') }}" data-popup="lightbox">
                             <i class="icon-books icon-4x"></i>
                             <span class="card-img-actions-overlay card-img">
@@ -60,7 +78,7 @@
                 <div class="card-body" style="padding: 0">
                     <div class="card-img-actions" align="center" style="padding: 20px">
                         <a href="{{ route('setores.index') }}" data-popup="lightbox">
-                            <i class="icon-office icon-4x"></i>
+                            <i class="icon-library2 icon-4x"></i>
                             <span class="card-img-actions-overlay card-img">
                                 <!--<i class="icon-plus3 icon-2x">Acessar</i>-->
                                 Acessar
@@ -69,6 +87,24 @@
                         <br>
                         <br>
                         <h5 class="mb-0 font-weight-semibold">Setores</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+                <div class="card-body" style="padding: 0">
+                    <div class="card-img-actions" align="center" style="padding: 20px">
+                        <a href="{{ route('tiposcontratos.index') }}" data-popup="lightbox">
+                            <i class="icon-file-text2 icon-4x"></i>
+                            <span class="card-img-actions-overlay card-img">
+                                <!--<i class="icon-plus3 icon-2x">Acessar</i>-->
+                                Acessar
+                            </span>
+                        </a>
+                        <br>
+                        <br>
+                        <h5 class="mb-0 font-weight-semibold">Tipos de Contratos</h5>
                     </div>
                 </div>
             </div>

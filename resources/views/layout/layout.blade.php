@@ -36,7 +36,9 @@
 	<script src="{{ asset('backend/global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
 
-	<script src="{{ asset('backend/assets/js/app.js') }}"></script>
+    <script src="{{ asset('backend/global_assets/js/plugins/notifications/pnotify.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/app.js') }}"></script>
+    <script src="{{ asset('backend/global_assets/js/demo_pages/extra_pnotify.js') }}"></script>
     <script src="{{ asset('backend/global_assets/js/demo_pages/dashboard.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/demo_pages/form_validation.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/demo_pages/form_select2.js') }}"></script>
@@ -77,7 +79,7 @@
 			<ul class="navbar-nav">
 				<li class="nav-item dropdown dropdown-user">
 					<a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
-						<img src="global_assets/images/placeholders/placeholder.jpg" class="rounded-circle mr-2" height="34" alt="">
+						{{-- <img src="{{ asset('backend/global_assets/images/placeholders/placeholder.jpg') }}" class="rounded-circle mr-2" height="34" alt=""> --}}
 						@php
 							$user = explode(' ', Auth::user()->name);
 						@endphp
@@ -85,7 +87,8 @@
 					</a>
 
 					<div class="dropdown-menu dropdown-menu-right">
-						<a href="#" class="dropdown-item"><i class="icon-cog5"></i> Configurações</a>
+						{{-- <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Configurações</a> --}}
+						<a href="#" onclick="modal({{ Auth::user()->id }})" class="dropdown-item"><i class="icon-lock"></i> Alterar Senha</a>
 						<div class="dropdown-divider"></div>
 						<a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();" style="color: #E57373"><i class="icon-switch2"></i> Logout</a>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -123,7 +126,7 @@
 			<div class="sidebar-content">
 
 				<!-- User menu -->
-				<div class="sidebar-user">
+				{{-- <div class="sidebar-user">
 					<div class="card-body">
 						<div class="media">
 							<div class="mr-3">
@@ -142,7 +145,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 				<!-- /user menu -->
 
 				<!-- Main navigation -->
@@ -220,8 +223,10 @@
 						<li class="nav-item nav-item-submenu">
 							<a href="#" class="nav-link"><i class="icon-cog"></i> <span>Auxiliares</span></a>
 							<ul class="nav nav-group-sub" data-submenu-title="JSON forms" style="display: none;">
+								<li class="nav-item"><a href="{{ route('auxempresasterceirizados.index') }}" class="nav-link">Empresas Terceirizados</a></li>
 								<li class="nav-item"><a href="{{ route('funcoes.index') }}" class="nav-link">Funções</a></li>
 								<li class="nav-item"><a href="{{ route('setores.index') }}" class="nav-link">Setores</a></li>
+								<li class="nav-item"><a href="{{ route('tiposcontratos.index') }}" class="nav-link">Tipos de Contratos</a></li>
 							</ul>
 						</li>
 						@endrole
@@ -353,7 +358,7 @@
 
             <div class="navbar-collapse collapse" id="navbar-footer">
                 <span class="navbar-text">
-                    &copy; 2020. IEPTEC - Instituto Estadual de Educação Profissional e Tecnológico
+                    &copy; 2020 - {{ date("Y") }}. IEPTEC - Instituto Estadual de Educação Profissional e Tecnológico
                 </span>
             </div>
         </div>
@@ -367,3 +372,41 @@
 
 </body>
 </html>
+
+<script>
+    function modal(id){
+        $('#formResetPassword').attr('action', '/usuarios/'+id+'/updatePassword');
+        $('#modal_reset_password').modal('show');
+    }
+</script>
+
+<!-- Horizontal form modal -->
+<div id="modal_reset_password" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Formulário de Redefinição de Senha </h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <form action="{{ route('usuarios.updatePassword', 0) }}" id="formResetPassword" method="POST" class="form-validate-jquery">
+                @csrf
+                @method('PATCH')
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-3">Password</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="password" id="password" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link" data-dismiss="modal" style="align: left">fechar</button>
+                    <button type="submit" class="btn bg-primary">Redefinir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /horizontal form modal -->

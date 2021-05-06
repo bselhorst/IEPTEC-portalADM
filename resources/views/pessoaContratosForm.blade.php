@@ -1,7 +1,7 @@
 @extends('layout/layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Contratos</span> - Cadastrar
+<span class="font-weight-semibold">Contratos</span> - {{ @$data ? 'Editar' : 'Cadastrar' }}
 @endsection
 
 @section('page-title-buttons')
@@ -10,6 +10,7 @@
 @section('breadcrumb')
 <a href="../tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
 <a href="{{ route('pessoas.index') }}" class="breadcrumb-item"><i class="icon-users mr-2"></i> Pessoas</a>
+<a href="{{ route('contratos.index', $pessoa_id) }}" class="breadcrumb-item"><i class="icon-file-text2 mr-2"></i> Contratos</a>
 <span class="breadcrumb-item active">{{ @$data ? 'Editar' : 'Cadastrar' }}</span>
 @endsection
 
@@ -61,10 +62,22 @@
                     <div class="col-lg-3"></div>
                     <label class="col-form-label col-lg-2">Tipo de Contrato <span class="text-danger">*</span></label>
                     <div class="col-lg-4">
-                        <select class="form-control select-search select2-hidden-accessible" name="setor_id" required>
+                        <select class="form-control select-search select2-hidden-accessible" name="tipo_contrato_id" required>
                             <option value="">Selecione um Tipo de Contrato</option>
                             @foreach ($tipo_contratos as $tipo_contrato)
                                 <option value="{{ $tipo_contrato->id }}" {{ ($tipo_contrato->id == @$data->tipo_contrato_id)? 'selected' : '' }}>{{ $tipo_contrato->tipo_contrato }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Empresa? <span class="text-danger">(Se terceirizado)</span></label>
+                    <div class="col-lg-4">
+                        <select class="form-control select-search select2-hidden-accessible" name="empresa_id">
+                            <option value="">Selecione a Empresa</option>
+                            @foreach ($empresas as $empresa)
+                                <option value="{{ $empresa->id }}" {{ ($empresa->id == @$data->empresa_id)? 'selected' : '' }}>{{ $empresa->nome }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -100,6 +113,18 @@
                     <label class="col-form-label col-lg-2">Carga Horária</label>
                     <div class="col-lg-2">
                         <input type="number" name="carga_horaria" class="form-control" placeholder="" value="{{ @$data->carga_horaria }}" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-3"></div>
+                    <label class="col-form-label col-lg-2">Cargo/Função <span class="text-danger">*</span></label>
+                    <div class="col-lg-4">
+                        <select class="form-control select-search select2-hidden-accessible" name="funcao_id" required>
+                            <option value="">Selecione um Cargo/Função</option>
+                            @foreach ($funcoes as $funcao)
+                                <option value="{{ $funcao->id }}" {{ ($funcao->id == @$data->funcao_id)? 'selected' : '' }}>{{ $funcao->funcao }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">

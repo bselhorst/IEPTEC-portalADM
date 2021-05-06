@@ -8,7 +8,9 @@ use App\PessoaContratos;
 use App\AuxSetores;
 use App\AuxTiposContratos;
 use App\AuxFuncoes;
+use App\HistoricoPessoas;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PessoasController extends Controller
 {
@@ -84,7 +86,13 @@ class PessoasController extends Controller
             'nomeDeEmergencia' => '',
             'numeroEmergencia' => '',
         ]);
-        $show = Pessoas::create($validatedData);
+        $new = Pessoas::create($validatedData);
+        $historicoData = [
+            "usuario" => Auth::user()->name,
+            "acao" => "adicionou",
+            "descricao" => json_encode($new, JSON_UNESCAPED_UNICODE),
+        ];
+        HistoricoPessoas::create($historicoData);
         return redirect('/pessoas')->with('success', 'Registro adicionado com sucesso!');
     }
 
@@ -96,7 +104,9 @@ class PessoasController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Pessoas::findOrFail($id);
+        $contracts = PessoaContratos::where('pessoa_id', $id)->orderBy('id', 'desc')->paginate(15);
+        return view('pessoasView', compact('data', 'contracts'));
     }
 
     /**
@@ -142,6 +152,12 @@ class PessoasController extends Controller
             'nomeDeEmergencia' => '',
             'numeroEmergencia' => '',
         ]);
+        $historicoData = [
+            "usuario" => Auth::user()->name,
+            "acao" => "editou",
+            "descricao" => json_encode($validatedData, JSON_UNESCAPED_UNICODE),
+        ];
+        HistoricoPessoas::create($historicoData);
         Pessoas::whereId($id)->update($validatedData);
         return redirect('/pessoas')->with('success', 'Registro editado com sucesso!');
     }
@@ -154,15 +170,22 @@ class PessoasController extends Controller
      */
     public function destroy($id)
     {
+        $nome = Pessoas::findOrFail($id);
+        $historicoData = [
+            "usuario" => Auth::user()->name,
+            "acao" => "deletou",
+            "descricao" => json_encode($nome, JSON_UNESCAPED_UNICODE),
+        ];
+        HistoricoPessoas::create($historicoData);
         Pessoas::findOrFail($id)->delete();
-        return redirect('/pessoas');
+        return redirect('/pessoas')->with('success', 'Registro excluído com sucesso!');
     }
 
     public function renovacao(Request $request, $id){
         $item['renovacao'] = "SIM";
         $item['data_renovacao'] = $request["data_renovacao"];
         PessoaContratos::whereId($id)->update($item);
-        return redirect('/pessoas/contratosGeral')->with('Success', 'Renovação realizada');
+        return redirect('/pessoas/contratosGeral')->with('success', 'Renovação realizada');
     }
 
     public function search(Request $request){

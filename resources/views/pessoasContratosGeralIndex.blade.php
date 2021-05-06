@@ -9,8 +9,8 @@
 @endsection
 
 @section('breadcrumb')
-<a href="/" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="#" class="breadcrumb-item active"><i class="icon-watch2 mr-2"></i> Calendário de Contratos</a>
+<a href="/" class="breadcrumb-item"><i class="icon-home2 mr-2"></i>Home</a>
+<a href="#" class="breadcrumb-item active"><i class="icon-watch2 mr-2"></i>Calendário de Contratos</a>
 @endsection
 
 @section('content')

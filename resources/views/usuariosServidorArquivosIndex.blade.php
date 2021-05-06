@@ -14,6 +14,15 @@
 @endsection
 
 @section('content')
+
+@if (\Session::has('success'))
+    <div class="alert alert-success bg-white alert-styled-left alert-arrow-left alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+        <h6 class="alert-heading font-weight-semibold mb-1">Sucesso</h6>
+        {!!\Session::get('success')!!}
+    </div>
+@endif
+
     <div class="card">
         <div class="card-body">
             <form class="form-validate-jquery" method="GET" action="/usuariosSA/search">
@@ -40,7 +49,7 @@
                 <a href="#" class="fab-menu-btn btn bg-teal-400 btn-float rounded-round btn-icon">
                     <i class="fab-icon-open icon-paragraph-justify3"></i>
                     <i class="fab-icon-close icon-cross2"></i>
-                </a>   
+                </a>
                 <ul class="fab-menu-inner">
                     @permission('create-usuariossa')
                     <li>
@@ -77,7 +86,7 @@
                                 <th class="text-center" style="width: 20px;"></th>
                             </tr>
                         </thead>
-    
+
                         <tbody>
                             <tr class="table-active table-border-double">
                                 <td colspan="6">Usuários do Sistema de Arquivos</td>
@@ -85,16 +94,16 @@
                                     <span class="badge bg-blue badge-pill">{{ $usuarios->total() }}</span>
                                 </td>
                             </tr>
-    
+
                             <!--Ticket começa aqui-->
                             @foreach($usuarios as $usuario)
-                                @php 
+                                @php
                                     $folders = DB::table('usa_permissions')
                                     ->select('aux_usa_folders.nome')
                                     ->leftJoin('aux_usa_folders', 'aux_usa_folders.id', 'usa_permissions.folder_id')
                                     ->where('user_id', $usuario->id)
                                     ->orderBy('aux_usa_folders.nome')
-                                    ->get() 
+                                    ->get()
                                 @endphp
                                 <tr>
                                     <td>{{ $usuario->tipo }}</td>
@@ -103,7 +112,7 @@
                                     <td>
                                         @foreach ($folders as $folder)
                                             {{ "[".$folder->nome."]" }}<br>
-                                        @endforeach                                        
+                                        @endforeach
                                     </td>
                                     <td>{{ $usuario->login }}</td>
                                     <td>{{ $usuario->status }}</td>
@@ -135,7 +144,7 @@
                                             $url = '&name='.request()->name;
                                         }else{
                                             $url='';
-                                        }   
+                                        }
                                     @endphp
                                     <ul class="pagination pagination-pager pagination-rounded justify-content-center">
                                         @if ($usuarios->previousPageUrl())
