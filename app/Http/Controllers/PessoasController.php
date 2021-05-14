@@ -36,7 +36,7 @@ class PessoasController extends Controller
     public function indexContratosGeral(){
 
         $data = DB::table('pessoas')
-        ->select('pessoas.id', 'pessoas.nome', 'pessoa_contratos.data_nomeacao', 'pessoa_contratos.data_exoneracao', 'pessoa_contratos.id as contrato_id', 'pessoa_contratos.renovacao', 'pessoa_contratos.data_renovacao')
+        ->select('pessoas.id', 'pessoas.nome', 'pessoa_contratos.data_nomeacao', 'pessoa_contratos.data_exoneracao', 'pessoa_contratos.id as contrato_id', 'pessoa_contratos.renovacao', 'pessoa_contratos.data_renovacao', 'pessoa_contratos.data_nova_exoneracao')
         ->leftJoin('pessoa_contratos', 'pessoas.id', 'pessoa_contratos.pessoa_id')
         ->where('pessoa_contratos.status', 1)
         ->orderBy('pessoas.nome')
@@ -197,7 +197,7 @@ class PessoasController extends Controller
     public function indexContratosGeralSearch(Request $request){
 
         $data = DB::table('pessoas')
-        ->select('pessoas.id', 'pessoas.nome', 'pessoa_contratos.data_nomeacao', 'pessoa_contratos.data_exoneracao', 'pessoa_contratos.id as contrato_id', 'pessoa_contratos.renovacao', 'pessoa_contratos.data_renovacao')
+        ->select('pessoas.id', 'pessoas.nome', 'pessoa_contratos.data_nomeacao', 'pessoa_contratos.data_exoneracao', 'pessoa_contratos.id as contrato_id', 'pessoa_contratos.renovacao', 'pessoa_contratos.data_renovacao', 'pessoa_contratos.data_nova_exoneracao')
         ->leftJoin('pessoa_contratos', 'pessoas.id', 'pessoa_contratos.pessoa_id')
         ->where('nome', 'like', '%'.$request->get('name').'%')
         ->orderBy('pessoas.nome')

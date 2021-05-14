@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 @section('page-title')
-<span class="font-weight-semibold">Auxiliar Situação do Bem</span>
+<span class="font-weight-semibold">Tipos de Contrato</span>
 @endsection
 
 @section('page-title-buttons')
@@ -10,7 +10,7 @@
 
 @section('breadcrumb')
 <a href="tecnologia" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-<a href="#" class="breadcrumb-item active"><i class="icon-file-text2 mr-2"></i>Aux Situacao Bem</a>
+<a href="#" class="breadcrumb-item active"><i class="icon-file-text2 mr-2"></i>Tipos de Contrato</a>
 @endsection
 
 @section('content')

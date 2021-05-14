@@ -154,6 +154,7 @@ Route::group(['prefix' => 'pessoas/{pessoa_id}/contratos', 'middleware' => ['rol
     Route::patch('/{id}', ['uses' => 'PessoaContratosController@update', 'as' => 'contratos.update'])->middleware('permission:update-pessoas');
     Route::patch('/{id}/updateContrato', ['uses' => 'PessoaContratosController@updateContrato', 'as' => 'contratos.updateContrato'])->middleware('permission:update-pessoas');
     Route::patch('/{id}/renovarContrato', ['uses' => 'PessoaContratosController@renovarContrato', 'as' => 'contratos.renovarContrato'])->middleware('permission:update-pessoas');
+    Route::patch('/{id}/renovarContratoCG', ['uses' => 'PessoaContratosController@renovarContratoCG', 'as' => 'contratos.renovarContrato'])->middleware('permission:update-pessoas');
     Route::patch('/{id}/updateContratoShow', ['uses' => 'PessoaContratosController@updateContratoShow', 'as' => 'contratos.updateContratoShow'])->middleware('permission:update-pessoas');
     Route::get('/{id}/edit', ['uses' => 'PessoaContratosController@edit', 'as' => 'contratos.edit'])->middleware('permission:update-pessoas');
 });

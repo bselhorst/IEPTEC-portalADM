@@ -130,7 +130,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a href="{{ route('contratos.edit', [$pessoa_id, $item->id]) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
                                                     <button class="dropdown-item" onclick="modalRenovarContrato({{ $pessoa_id }},{{ $item->id }})"><i class="icon-alarm-add text-success"></i>Renovar Contrato</button>
-                                                    <button class="dropdown-item" onclick="modal({{ $pessoa_id }},{{ $item->id }})"><i class="{{ ($item->status == 0)? 'icon-check text-success' : 'icon-close2 text-danger'}}"></i>{{ ($item->status == 1)? 'Desativar ' : 'Ativar ' }}Contrato</button>
+                                                    <button class="dropdown-item" onclick="modalDesativacao({{ $pessoa_id }},{{ $item->id }})"><i class="{{ ($item->status == 0)? 'icon-check text-success' : 'icon-close2 text-danger'}}"></i>{{ ($item->status == 1)? 'Desativar ' : 'Ativar ' }}Contrato</button>
                                                     <form method="POST" action="{{ route('contratos.destroy', [$pessoa_id, $item->id]) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')
@@ -174,7 +174,7 @@
         </div>
     </div>
     <script>
-        function modal(pessoa_id, id){
+        function modalDesativacao(pessoa_id, id){
             $('#formStatusContrato').attr('action', 'contratos/'+id+'/updateContrato');
             $('#modalStatusContrato').modal('show');
         }

@@ -74,6 +74,7 @@
                                 <td>Data Inicial</td>
                                 <td>Data Final</td>
                                 <td>Renovado?</td>
+                                <td>Data de Renovação</td>
                                 <td>Duração</td>
                                 <td>Observação</td>
                                 <td align="center">Status</td>
@@ -97,7 +98,7 @@
                                     </td>
                                     <td>
                                         <div class="font-weight-semibold">
-                                            {{ ($item->renovacao=="SIM") ? date('d/m/Y', strtotime($item->data_renovacao)) : (($item->data_exoneracao) ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-') }}
+                                            {{ ($item->renovacao=="SIM") ? date('d/m/Y', strtotime($item->data_nova_exoneracao)) : (($item->data_nova_exoneracao) ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-') }}
                                         </div>
                                     </td>
                                     <td>
@@ -106,9 +107,14 @@
                                         </div>
                                     </td>
                                     <td>
+                                        <div class="font-weight-semibold">
+                                            {{ ($item->renovacao=="SIM") ? date('d/m/Y', strtotime($item->data_renovacao)) : (($item->data_renovacao) ? date('d/m/Y', strtotime($item->data_exoneracao)) : '-') }}
+                                        </div>
+                                    </td>
+                                    <td>
                                         @php
                                             $start_time = \Carbon\Carbon::parse($item->data_nomeacao);
-                                            ($item->renovacao == "SIM") ? $finish_time = \Carbon\Carbon::parse($item->data_renovacao) : $finish_time = \Carbon\Carbon::parse($item->data_exoneracao);
+                                            ($item->renovacao == "SIM") ? $finish_time = \Carbon\Carbon::parse($item->data_nova_exoneracao) : $finish_time = \Carbon\Carbon::parse($item->data_exoneracao);
                                             $result = $start_time->diffInDays($finish_time, false);
                                         @endphp
                                         {{ ($item->data_exoneracao)? $result." dias" : 'INDETERMINADO' }}
@@ -116,7 +122,10 @@
                                     <td>
                                         @php
                                             $date = \Carbon\Carbon::parse(date('Y-m-d'));
-                                            ($item->renovacao == "SIM") ? $duration = \Carbon\Carbon::parse($item->data_renovacao) : $duration = \Carbon\Carbon::parse($item->data_exoneracao);
+                                            ($item->renovacao == "SIM") ?
+                                                $duration = \Carbon\Carbon::parse($item->data_renovacao)
+                                            :
+                                                $duration = \Carbon\Carbon::parse($item->data_exoneracao);
                                             $result2 = $date->diffInDays($duration, false);
                                         @endphp
                                         {{ ($item->data_exoneracao) ? ($result2 >= 0) ? $result2." dias para o vencimento" : $result2." dia(s) vencidos" : 'INDETERMINADO' }}
@@ -125,6 +134,7 @@
                                         <span class="badge {{ ($result2 >= 0) ? 'badge-success' : 'badge-danger' }}">{{ ($result2 >= 0) ? 'Em vigência' : 'Vencido' }}</span>
                                         {{-- <span class="badge badge-light badge-striped badge-striped-left {{ ($result2 >= 0) ? 'border-left-success' : 'border-left-danger' }}">{{ ($result2 >= 0) ? 'Em vigência' : 'Vencido' }}</span> --}}
                                     </td>
+
                                     <td class="text-center">
                                         <div class="list-icons">
                                             <div class="list-icons-item dropdown">
@@ -132,7 +142,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a href="{{ route('pessoas.edit', $item->id) }}" class="dropdown-item"><i class="icon-pencil"></i> Editar</a>
                                                     <a href="{{ route('contratos.index', $item->id) }}" class="dropdown-item"><i class="icon-file-text2"></i> Contratos</a>
-                                                    <button class="dropdown-item" onclick="modal({{ $item->contrato_id }})"><i class="icon-alarm-add"></i> Renovar Contrato</button>
+                                                    <button class="dropdown-item" onclick="modalRenovarContrato({{ $item->id }}, {{ $item->contrato_id }})"><i class="icon-alarm-add"></i> Renovar Contrato</button>
                                                     <form method="POST" action="{{ route('pessoas.destroy', $item->id) }}" onsubmit="return confirm('Deseja deletar esse dado?')">
                                                         @csrf
                                                         @method('DELETE')
@@ -145,7 +155,7 @@
                                 </tr>
                             @endforeach
                             <tr class="">
-                                <td colspan="8">
+                                <td colspan="9">
                                     @php
                                         if(request()->name){
                                             $url = '&name='.request()->name;
@@ -176,58 +186,50 @@
         </div>
     </div>
     <script>
-        function modal(id){
-            $('#formRenovacaoContrato').attr('action', '/pessoas/'+id+'/renovacaoContrato');
-            $('#modal_renovacao_contrato').modal('show');
-            $('#modal_renovacao_contrato').on('hidden.bs.modal', function () {
-                document.getElementById('data_renovacao').value = '';
-            })
+        function modalRenovarContrato(pessoa_id, id){
+            // document.getElementById('pessoa_id').value = pessoa_id;
+            document.getElementById('data_renovacao').value = null;
+            document.getElementById('data_final').value = null;
+            document.getElementById("btnConfirmaRenovacao").disabled = true;
+            $('#formRenovarContrato').attr('action', pessoa_id+'/contratos/'+id+'/renovarContratoCG');
+            $('#modalRenovarContrato').modal('show');
         }
-        function submitModal(){
-            if(document.getElementById('data_renovacao').value == ""){
-                alert('Adicione a Data de Renovação');
-                return false;
+        function activeButton(){
+            data_renovacao = document.getElementById('data_renovacao').value;
+            data_final = document.getElementById('data_final').value;
+            if(data_renovacao && data_final){
+                document.getElementById("btnConfirmaRenovacao").disabled = false;
+            }else{
+                document.getElementById("btnConfirmaRenovacao").disabled = true;
             }
-            return true;
         }
     </script>
 
     <!-- Horizontal form modal -->
-    <div id="modal_renovacao_contrato" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-md">
+    <div id="modalRenovarContrato" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Renovação de Contrato </h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <form id="formRenovacaoContrato" onsubmit="return submitModal()" method="POST" class="form-validate-jquery">
+                <form action="" id="formRenovarContrato" method="POST" class="form-validate-jquery">
+                    {{-- <input type="hidden" name="pessoa_id" /> --}}
                     @csrf
                     @method('PATCH')
-                    <div class="modal-body">
-                        <div class="form-group row">
-                            <div class="col-sm-2"></div>
-                            <label class="col-form-label col-sm-4">Data da Renovação</label>
-                            <div class="col-sm-4">
-                                <input type="date" name="data_renovacao" id="data_renovacao" class="form-control" required>
-                            </div>
-                        </div>
-                        {{-- <div class="form-group row">
-                            <div class="col-sm-2"></div>
-                            <label class="col-form-label col-sm-4">Data Final da Renovação</label>
-                            <div class="col-sm-4">
-                                <input type="date" name="data_exoneracao" id="data_exoneracao" class="form-control" required>
-                            </div>
-                        </div> --}}
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação de Renovação</h5>
+                        <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
-
+                    <div class="modal-body">
+                        <div class="bootbox-body">Data de renovação</div>
+                        <input type="date" name="data_renovacao" id="data_renovacao" onchange="activeButton()" class="form-control" autocomplete="off" value="" required>
+                        <br>
+                        <div class="bootbox-body">Nova data final</div>
+                        <input type="date" name="data_nova_exoneracao" id="data_final" onchange="activeButton()" class="form-control" autocomplete="off" value="" required>
+                    </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-link" data-dismiss="modal" style="align: left">fechar</button>
-                        <button type="submit" class="btn bg-primary">Cadastrar Renovação</button>
+                        <button data-bb-handler="cancel" type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+                        <button data-bb-handler="confirm" type="submit" id="btnConfirmaRenovacao" class="btn btn-primary">Sim</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- /horizontal form modal -->
 @endsection

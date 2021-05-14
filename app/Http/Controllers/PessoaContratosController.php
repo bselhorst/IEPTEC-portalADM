@@ -239,4 +239,24 @@ class PessoaContratosController extends Controller
         PessoaContratos::whereId($id)->update($item);
         return redirect('pessoas/'.$request['pessoa_id'].'/contratos')->with('success', 'Registro alterado com sucesso!');
     }
+
+    public function renovarContratoCG(Request $request, $pessoa_id, $id){
+        $item['renovacao'] = "SIM";
+        $item['data_nova_exoneracao'] = $request["data_nova_exoneracao"];
+        $item['data_renovacao'] = $request["data_renovacao"];
+        $validatedData = [
+            "id" => $id,
+            "pessoa_id" => $pessoa_id,
+            "data_nova_exoneracao" => $item['data_nova_exoneracao'],
+            "data_renovacao" => $item['data_renovacao'],
+        ];
+        $historicoData = [
+            "usuario" => Auth::user()->name,
+            "acao" => "renovou",
+            "descricao" => json_encode($validatedData, JSON_UNESCAPED_UNICODE),
+        ];
+        HistoricoPessoaContratos::create($historicoData);
+        PessoaContratos::whereId($id)->update($item);
+        return redirect('pessoas/contratosGeral')->with('success', 'Registro alterado com sucesso!');
+    }
 }
