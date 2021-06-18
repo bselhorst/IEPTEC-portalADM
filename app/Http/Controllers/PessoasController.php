@@ -22,14 +22,6 @@ class PessoasController extends Controller
     public function index()
     {
         $data = Pessoas::orderBy('nome')->paginate(15);
-
-        // $data = DB::table('pessoas')
-        // ->select('pessoas.id', 'pessoas.nome', 'pessoa_contratos.data_nomeacao', 'pessoa_contratos.data_exoneracao')
-        // ->leftJoin('pessoa_contratos', 'pessoas.id', 'pessoa_contratos.pessoa_id')
-        // ->orderBy('pessoas.nome')
-        // ->orderBy('pessoa_contratos.id', 'DESC')
-        // ->paginate(15);
-
         return view('pessoasIndex', compact('data'));
     }
 
