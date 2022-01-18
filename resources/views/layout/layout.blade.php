@@ -36,6 +36,12 @@
 	<script src="{{ asset('backend/global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
 
+    <script src="{{ asset('backend/global_assets/js/plugins/ui/fullcalendar/core/main.min.js') }}"></script>
+	<script src="{{ asset('backend/global_assets/js/plugins/ui/fullcalendar/daygrid/main.min.js') }}"></script>
+	{{-- <script src="{{ asset('backend/global_assets/js/plugins/ui/fullcalendar/timegrid/main.min.js') }}"></script> --}}
+	{{-- <script src="{{ asset('backend/global_assets/js/plugins/ui/fullcalendar/list/main.min.js') }}"></script> --}}
+	{{-- <script src="{{ asset('backend/global_assets/js/plugins/ui/fullcalendar/interaction/main.min.js') }}"></script> --}}
+
     <script src="{{ asset('backend/global_assets/js/plugins/notifications/pnotify.min.js') }}"></script>
     <script src="{{ asset('backend/assets/js/app.js') }}"></script>
     <script src="{{ asset('backend/global_assets/js/demo_pages/extra_pnotify.js') }}"></script>
@@ -43,7 +49,8 @@
 	<script src="{{ asset('backend/global_assets/js/demo_pages/form_validation.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/demo_pages/form_select2.js') }}"></script>
 	<script src="{{ asset('backend/global_assets/js/demo_pages/form_multiselect.js') }}"></script>
-	<script src="{{ asset('backend/global_assets/js/demo_pages/components_modals.js') }}"></script>
+    <script src="{{ asset('backend/global_assets/js/demo_pages/components_modals.js') }}"></script>
+    {{-- <script src="{{ asset('backend/global_assets/js/demo_pages/fullcalendar_basic.js') }}"></script> --}}
 	<!-- /theme JS files -->
 
 </head>

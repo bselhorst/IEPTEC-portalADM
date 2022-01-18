@@ -61,26 +61,42 @@ Route::group(['prefix' => 'almoxarifado', 'middleware' => ['role:almoxarifado']]
 });
 
 //TECNOLOGIA
+
+//CALENDARIO
+Route::group(['prefix' => 'calendario', 'middleware' => ['role:chamados']], function() {
+    // Route::post('/', ['uses' => 'ChamadosController@store', 'as' => 'chamados.store']);
+    Route::get('/', ['uses' => 'CalendarioController@index', 'as' => 'calendario.index']);
+    // Route::get('/search', ['uses' => 'ChamadosController@search', 'as' => 'chamados.search']);
+    // Route::get('/create', ['uses' => 'ChamadosController@create', 'as' => 'chamados.create']);
+    // Route::delete('/{id}', ['uses' => 'ChamadosController@destroy', 'as' => 'chamados.destroy']);
+    // Route::patch('/{id}', ['uses' => 'ChamadosController@update', 'as' => 'chamados.update']);
+    // Route::patch('/{id}/finish', ['uses' => 'ChamadosController@finish', 'as' => 'chamados.finish']);
+    // Route::get('/{id}', ['uses' => 'ChamadosController@show', 'as' => 'chamados.show']);
+    // Route::get('/{id}/finishPage', ['uses' => 'ChamadosController@finishPage', 'as' => 'chamados.finishPage']);
+    // Route::get('/{id}/edit', ['uses' => 'ChamadosController@edit', 'as' => 'chamados.edit']);
+    // Route::get('/{id}/pdf', ['uses' => 'ChamadosController@pdf', 'as' => 'chamados.pdf']);
+});
+
 //CHAMADOS
 Route::group(['prefix' => 'chamados', 'middleware' => ['role:chamados']], function() {
-    Route::post('/', ['uses' => 'ChamadosController@store', 'as' => 'chamados.store'])->middleware('permission:create-chamados');
-    Route::get('/', ['uses' => 'ChamadosController@index', 'as' => 'chamados.index'])->middleware('permission:read-chamados');
-    Route::get('/search', ['uses' => 'ChamadosController@search', 'as' => 'chamados.search'])->middleware('permission:read-chamados');
-    Route::get('/create', ['uses' => 'ChamadosController@create', 'as' => 'chamados.create'])->middleware('permission:create-chamados');
-    Route::delete('/{id}', ['uses' => 'ChamadosController@destroy', 'as' => 'chamados.destroy'])->middleware('permission:delete-chamados');
-    Route::patch('/{id}', ['uses' => 'ChamadosController@update', 'as' => 'chamados.update'])->middleware('permission:update-chamados');
-    Route::patch('/{id}/finish', ['uses' => 'ChamadosController@finish', 'as' => 'chamados.finish'])->middleware('permission:update-chamados');
-    Route::get('/{id}', ['uses' => 'ChamadosController@show', 'as' => 'chamados.show'])->middleware('permission:read-chamados');
-    Route::get('/{id}/finishPage', ['uses' => 'ChamadosController@finishPage', 'as' => 'chamados.finishPage'])->middleware('permission:update-chamados');
-    Route::get('/{id}/edit', ['uses' => 'ChamadosController@edit', 'as' => 'chamados.edit'])->middleware('permission:update-chamados');
-    Route::get('/{id}/pdf', ['uses' => 'ChamadosController@pdf', 'as' => 'chamados.pdf'])->middleware('permission:read-chamados');
+    Route::post('/', ['uses' => 'ChamadosController@store', 'as' => 'chamados.store']);
+    Route::get('/', ['uses' => 'ChamadosController@index', 'as' => 'chamados.index']);
+    Route::get('/search', ['uses' => 'ChamadosController@search', 'as' => 'chamados.search']);
+    Route::get('/create', ['uses' => 'ChamadosController@create', 'as' => 'chamados.create']);
+    Route::delete('/{id}', ['uses' => 'ChamadosController@destroy', 'as' => 'chamados.destroy']);
+    Route::patch('/{id}', ['uses' => 'ChamadosController@update', 'as' => 'chamados.update']);
+    Route::patch('/{id}/finish', ['uses' => 'ChamadosController@finish', 'as' => 'chamados.finish']);
+    Route::get('/{id}', ['uses' => 'ChamadosController@show', 'as' => 'chamados.show']);
+    Route::get('/{id}/finishPage', ['uses' => 'ChamadosController@finishPage', 'as' => 'chamados.finishPage']);
+    Route::get('/{id}/edit', ['uses' => 'ChamadosController@edit', 'as' => 'chamados.edit']);
+    Route::get('/{id}/pdf', ['uses' => 'ChamadosController@pdf', 'as' => 'chamados.pdf']);
 });
 //USUÁRIOS
 Route::group(['prefix' => 'usuarios', 'middleware' => ['role:usuarios']], function() {
-    Route::post('/', ['uses' => 'UsuariosController@store', 'as' => 'usuarios.store'])->middleware('permission:create-users');
+    Route::post('/', ['uses' => 'UsuariosController@store', 'as' => 'usuarios.store']);
     Route::get('/', ['uses' => 'UsuariosController@index', 'as' => 'usuarios.index']);
     Route::get('/search', ['uses' => 'UsuariosController@search', 'as' => 'usuarios.search']);
-    Route::get('/create', ['uses' => 'UsuariosController@create', 'as' => 'usuarios.create'])->middleware('permission:create-users');
+    Route::get('/create', ['uses' => 'UsuariosController@create', 'as' => 'usuarios.create']);
     //Route::patch('/{id}/updatePassword', ['uses' => 'UsuariosController@updatePassword', 'as' => 'usuarios.updatePassword'])->middleware('permission:update-users');
 });
 
@@ -90,13 +106,13 @@ Route::group(['prefix' => 'usuarios'], function() {
 
 //USUÁRIOS SERVIDOR DE ARQUIVO
 Route::group(['prefix' => 'usuariosSA', 'middleware' => ['role:usuarios-sa']], function() {
-    Route::post('/', ['uses' => 'UsuariosServidorArquivosController@store', 'as' => 'usuariossa.store'])->middleware('permission:create-usuariossa');
+    Route::post('/', ['uses' => 'UsuariosServidorArquivosController@store', 'as' => 'usuariossa.store']);
     Route::get('/search', ['uses' => 'UsuariosServidorArquivosController@search', 'as' => 'usuariossa.search']);
     Route::get('/', ['uses' => 'UsuariosServidorArquivosController@index', 'as' => 'usuariossa.index']);
-    Route::get('/create', ['uses' => 'UsuariosServidorArquivosController@create', 'as' => 'usuariossa.create'])->middleware('permission:create-usuariossa');
-    Route::delete('/{id}', ['uses' => 'UsuariosServidorArquivosController@destroy', 'as' => 'usuariossa.destroy'])->middleware('permission:delete-usuariossa');
-    Route::patch('/{id}', ['uses' => 'UsuariosServidorArquivosController@update', 'as' => 'usuariossa.update'])->middleware('permission:update-usuariossa');
-    Route::get('/{id}/edit', ['uses' => 'UsuariosServidorArquivosController@edit', 'as' => 'usuariossa.edit'])->middleware('permission:update-usuariossa');
+    Route::get('/create', ['uses' => 'UsuariosServidorArquivosController@create', 'as' => 'usuariossa.create']);
+    Route::delete('/{id}', ['uses' => 'UsuariosServidorArquivosController@destroy', 'as' => 'usuariossa.destroy']);
+    Route::patch('/{id}', ['uses' => 'UsuariosServidorArquivosController@update', 'as' => 'usuariossa.update']);
+    Route::get('/{id}/edit', ['uses' => 'UsuariosServidorArquivosController@edit', 'as' => 'usuariossa.edit']);
 });
 
 //PATRIMONIO
@@ -131,40 +147,40 @@ Route::group(['prefix' => 'patrimonios', 'middleware' => ['role:patrimonio']], f
 
 //PESSOAS
 Route::group(['prefix' => 'pessoas', 'middleware' => ['role:rh']], function() {
-    Route::post('/', ['uses' => 'PessoasController@store', 'as' => 'pessoas.store'])->middleware('permission:create-pessoas');
+    Route::post('/', ['uses' => 'PessoasController@store', 'as' => 'pessoas.store']);
     Route::get('/', ['uses' => 'PessoasController@index', 'as' => 'pessoas.index']);
     Route::get('/search', ['uses' => 'PessoasController@search', 'as' => 'pessoas.search']);
     Route::get('/contratosGeralSearch', ['uses' => 'PessoasController@indexContratosGeralSearch', 'as' => 'pessoas.indexContratoGeralSearch']);
     Route::get('/contratosGeral', ['uses' => 'PessoasController@indexContratosGeral', 'as' => 'pessoas.indexContratoGeral']);
-    Route::get('/create', ['uses' => 'PessoasController@create', 'as' => 'pessoas.create'])->middleware('permission:create-pessoas');
+    Route::get('/create', ['uses' => 'PessoasController@create', 'as' => 'pessoas.create']);
     Route::get('/{id}/view', ['uses' => 'PessoasController@show', 'as' => 'pessoas.show']);
-    Route::delete('/{id}', ['uses' => 'PessoasController@destroy', 'as' => 'pessoas.destroy'])->middleware('permission:delete-pessoas');
-    Route::patch('/{id}', ['uses' => 'PessoasController@update', 'as' => 'pessoas.update'])->middleware('permission:update-pessoas');
-    Route::patch('/{id}/renovacaoContrato', ['uses' => 'PessoasController@renovacao', 'as' => 'pessoas.renovacao'])->middleware('permission:update-pessoas');
-    Route::get('/{id}/edit', ['uses' => 'PessoasController@edit', 'as' => 'pessoas.edit'])->middleware('permission:update-pessoas');
+    Route::delete('/{id}', ['uses' => 'PessoasController@destroy', 'as' => 'pessoas.destroy']);
+    Route::patch('/{id}', ['uses' => 'PessoasController@update', 'as' => 'pessoas.update']);
+    Route::patch('/{id}/renovacaoContrato', ['uses' => 'PessoasController@renovacao', 'as' => 'pessoas.renovacao']);
+    Route::get('/{id}/edit', ['uses' => 'PessoasController@edit', 'as' => 'pessoas.edit']);
 });
 
 //PESSOAS CONTRATOS
 Route::group(['prefix' => 'pessoas/{pessoa_id}/contratos', 'middleware' => ['role:rh']], function() {
-    Route::post('/', ['uses' => 'PessoaContratosController@store', 'as' => 'contratos.store'])->middleware('permission:create-pessoas');
+    Route::post('/', ['uses' => 'PessoaContratosController@store', 'as' => 'contratos.store']);
     Route::get('/', ['uses' => 'PessoaContratosController@index', 'as' => 'contratos.index']);
-    Route::get('/create', ['uses' => 'PessoaContratosController@create', 'as' => 'contratos.create'])->middleware('permission:create-pessoas');
-    Route::delete('/{id}', ['uses' => 'PessoaContratosController@destroy', 'as' => 'contratos.destroy'])->middleware('permission:delete-pessoas');
-    Route::delete('/{id}/view/contractDestroy', ['uses' => 'PessoaContratosController@showdestroy', 'as' => 'contratos.showdestroy'])->middleware('permission:delete-pessoas');
-    Route::patch('/{id}', ['uses' => 'PessoaContratosController@update', 'as' => 'contratos.update'])->middleware('permission:update-pessoas');
-    Route::patch('/{id}/updateContrato', ['uses' => 'PessoaContratosController@updateContrato', 'as' => 'contratos.updateContrato'])->middleware('permission:update-pessoas');
-    Route::patch('/{id}/renovarContrato', ['uses' => 'PessoaContratosController@renovarContrato', 'as' => 'contratos.renovarContrato'])->middleware('permission:update-pessoas');
-    Route::patch('/{id}/renovarContratoCG', ['uses' => 'PessoaContratosController@renovarContratoCG', 'as' => 'contratos.renovarContrato'])->middleware('permission:update-pessoas');
-    Route::patch('/{id}/updateContratoShow', ['uses' => 'PessoaContratosController@updateContratoShow', 'as' => 'contratos.updateContratoShow'])->middleware('permission:update-pessoas');
-    Route::get('/{id}/edit', ['uses' => 'PessoaContratosController@edit', 'as' => 'contratos.edit'])->middleware('permission:update-pessoas');
+    Route::get('/create', ['uses' => 'PessoaContratosController@create', 'as' => 'contratos.create']);
+    Route::delete('/{id}', ['uses' => 'PessoaContratosController@destroy', 'as' => 'contratos.destroy']);
+    Route::delete('/{id}/view/contractDestroy', ['uses' => 'PessoaContratosController@showdestroy', 'as' => 'contratos.showdestroy']);
+    Route::patch('/{id}', ['uses' => 'PessoaContratosController@update', 'as' => 'contratos.update']);
+    Route::patch('/{id}/updateContrato', ['uses' => 'PessoaContratosController@updateContrato', 'as' => 'contratos.updateContrato']);
+    Route::patch('/{id}/renovarContrato', ['uses' => 'PessoaContratosController@renovarContrato', 'as' => 'contratos.renovarContrato']);
+    Route::patch('/{id}/renovarContratoCG', ['uses' => 'PessoaContratosController@renovarContratoCG', 'as' => 'contratos.renovarContrato']);
+    Route::patch('/{id}/updateContratoShow', ['uses' => 'PessoaContratosController@updateContratoShow', 'as' => 'contratos.updateContratoShow']);
+    Route::get('/{id}/edit', ['uses' => 'PessoaContratosController@edit', 'as' => 'contratos.edit']);
 });
 
 //AUXILIARES DE TECNOLOGIA
 Route::group(['prefix' => 'auxcategorias', 'middleware' => ['role:auxiliar-tecnologia']], function(){
-    Route::post('/', ['uses' => 'AuxCategoriasController@store', 'as' => 'categorias.store'])->middleware('permission:create-aux-tecnologia');
+    Route::post('/', ['uses' => 'AuxCategoriasController@store', 'as' => 'categorias.store']);
     Route::get('/', ['uses' => 'AuxCategoriasController@index', 'as' => 'categorias.index']);
-    Route::get('/create', ['uses' => 'AuxCategoriasController@create', 'as' => 'categorias.create'])->middleware('permission:create-aux-tecnologia');
-    Route::delete('/{id}', ['uses' => 'AuxCategoriasController@destroy', 'as' => 'categorias.destroy'])->middleware('permission:delete-aux-tecnologia');
+    Route::get('/create', ['uses' => 'AuxCategoriasController@create', 'as' => 'categorias.create']);
+    Route::delete('/{id}', ['uses' => 'AuxCategoriasController@destroy', 'as' => 'categorias.destroy']);
 });
 
 Route::group(['prefix' => 'auxfuncoes', 'middleware' => ['role:rh']], function(){
@@ -175,39 +191,39 @@ Route::group(['prefix' => 'auxfuncoes', 'middleware' => ['role:rh']], function()
 });
 
 Route::group(['prefix' => 'auxmarcas', 'middleware' => ['role:auxiliar-tecnologia']], function(){
-    Route::post('/', ['uses' => 'AuxMarcasController@store', 'as' => 'marcas.store'])->middleware('permission:create-aux-tecnologia');
+    Route::post('/', ['uses' => 'AuxMarcasController@store', 'as' => 'marcas.store']);
     Route::get('/', ['uses' => 'AuxMarcasController@index', 'as' => 'marcas.index']);
-    Route::get('/create', ['uses' => 'AuxMarcasController@create', 'as' => 'marcas.create'])->middleware('permission:create-aux-tecnologia');
+    Route::get('/create', ['uses' => 'AuxMarcasController@create', 'as' => 'marcas.create']);
     Route::get('/{id}', ['uses' => 'AuxMarcasController@modelos', 'as' => 'marcas.modelos']);
-    Route::delete('/{id}', ['uses' => 'AuxMarcasController@destroy', 'as' => 'marcas.destroy'])->middleware('permission:delete-aux-tecnologia');
+    Route::delete('/{id}', ['uses' => 'AuxMarcasController@destroy', 'as' => 'marcas.destroy']);
 });
 
 Route::group(['prefix' => 'auxmodelos', 'middleware' => ['role:auxiliar-tecnologia']], function(){
-    Route::post('/', ['uses' => 'AuxModelosController@store', 'as' => 'modelos.store'])->middleware('permission:create-aux-tecnologia');
+    Route::post('/', ['uses' => 'AuxModelosController@store', 'as' => 'modelos.store']);
     Route::get('/', ['uses' => 'AuxModelosController@index', 'as' => 'modelos.index']);
-    Route::get('/create/{id}', ['uses' => 'AuxModelosController@create', 'as' => 'modelos.create'])->middleware('permission:create-aux-tecnologia');
-    Route::delete('/{id}', ['uses' => 'AuxModelosController@destroy', 'as' => 'modelos.destroy'])->middleware('permission:delete-aux-tecnologia');
+    Route::get('/create/{id}', ['uses' => 'AuxModelosController@create', 'as' => 'modelos.create']);
+    Route::delete('/{id}', ['uses' => 'AuxModelosController@destroy', 'as' => 'modelos.destroy']);
 });
 
 Route::group(['prefix' => 'tecnicos', 'middleware' => ['role:auxiliar-tecnologia']], function(){
-    Route::post('/', ['uses' => 'TecnicosController@store', 'as' => 'tecnicos.store'])->middleware('permission:create-aux-tecnologia');
+    Route::post('/', ['uses' => 'TecnicosController@store', 'as' => 'tecnicos.store']);
     Route::get('/', ['uses' => 'TecnicosController@index', 'as'=> 'tecnicos.index']);
-    Route::get('/create', ['uses' => 'TecnicosController@create', 'as' => 'tecnicos.create'])->middleware('permission:create-aux-tecnologia');
-    Route::delete('/{id}', ['uses' => 'TecnicosController@destroy', 'as' => 'tecnicos.destroy'])->middleware('permission:delete-aux-tecnologia');
+    Route::get('/create', ['uses' => 'TecnicosController@create', 'as' => 'tecnicos.create']);
+    Route::delete('/{id}', ['uses' => 'TecnicosController@destroy', 'as' => 'tecnicos.destroy']);
 });
 
 Route::group(['prefix' => 'auxtiposcontratos', 'middleware' => ['role:rh']], function(){
-    Route::post('/', ['uses' => 'AuxTiposContratosController@store', 'as' => 'tiposcontratos.store'])->middleware('permission:create-aux-tecnologia');
+    Route::post('/', ['uses' => 'AuxTiposContratosController@store', 'as' => 'tiposcontratos.store']);
     Route::get('/', ['uses' => 'AuxTiposContratosController@index', 'as' => 'tiposcontratos.index']);
-    Route::get('/create', ['uses' => 'AuxTiposContratosController@create', 'as' => 'tiposcontratos.create'])->middleware('permission:create-aux-tecnologia');
-    Route::delete('/{id}', ['uses' => 'AuxTiposContratosController@destroy', 'as' => 'tiposcontratos.destroy'])->middleware('permission:delete-aux-tecnologia');
+    Route::get('/create', ['uses' => 'AuxTiposContratosController@create', 'as' => 'tiposcontratos.create']);
+    Route::delete('/{id}', ['uses' => 'AuxTiposContratosController@destroy', 'as' => 'tiposcontratos.destroy']);
 });
 
 Route::group(['prefix' => 'auxtiposequipamentos', 'middleware' => ['role:auxiliar-tecnologia']], function(){
-    Route::post('/', ['uses' => 'AuxTiposEquipamentosController@store', 'as' => 'tiposequipamentos.store'])->middleware('permission:create-aux-tecnologia');
+    Route::post('/', ['uses' => 'AuxTiposEquipamentosController@store', 'as' => 'tiposequipamentos.store']);
     Route::get('/', ['uses' => 'AuxTiposEquipamentosController@index', 'as' => 'tiposequipamentos.index']);
-    Route::get('/create', ['uses' => 'AuxTiposEquipamentosController@create', 'as' => 'tiposequipamentos.create'])->middleware('permission:create-aux-tecnologia');
-    Route::delete('/{id}', ['uses' => 'AuxTiposEquipamentosController@destroy', 'as' => 'tiposequipamentos.destroy'])->middleware('permission:delete-aux-tecnologia');
+    Route::get('/create', ['uses' => 'AuxTiposEquipamentosController@create', 'as' => 'tiposequipamentos.create']);
+    Route::delete('/{id}', ['uses' => 'AuxTiposEquipamentosController@destroy', 'as' => 'tiposequipamentos.destroy']);
 });
 
 Route::group(['prefix' => 'setores', 'middleware' => ['role:rh']], function(){
@@ -229,3 +245,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 //INDEX ESPECÍFICO DE CADA SISTEMA
 Route::get('/tecnologia', 'HomeController@indexTecnologia')->name('tecnologia');
 Route::get('/RH', 'HomeController@indexRH')->name('rh')->middleware('role:rh');
+
+//Server Status
+Route::get('/status', function (){
+    return view('status');
+});
